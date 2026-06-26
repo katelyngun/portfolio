@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Katelyn Gunawan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink-bg: #f5dce2;
+      --pink-card: rgba(240, 210, 220, 0.55);
+      --pink-card-border: rgba(255, 255, 255, 0.55);
+      --text-dark: #2c2c2c;
+      --text-mid: #555;
+      --green-btn: #7a9e6e;
+      --green-btn-hover: #6a8e5e;
+      --nav-glass: rgba(255, 255, 255, 0.35);
+      --nav-border: rgba(255, 255, 255, 0.6);
+      --bubble: rgba(255, 255, 255, 0.75);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 300;
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+    }
+
+    /* ── CANVAS BG ── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 80px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px;
+      padding: 4px 16px 4px 6px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+    .nav-logo img {
+      height: 46px; object-fit: contain; display: block;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo span {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text-dark); letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+    .nav-logo:hover img   { transform: scale(1.15); }
+    .nav-logo:hover span  { color: #7a9e6e; }
+
+    .nav-pills {
+      display: flex;
+      gap: 0;
+      list-style: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px;
+      padding: 5px;
+      box-shadow:
+        0 4px 24px rgba(240, 160, 185, 0.18),
+        0 1px 8px rgba(240, 180, 170, 0.12),
+        0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+
+    .nav-pills li a {
+      display: block;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 0.83rem;
+      font-weight: 400;
+      color: var(--text-dark);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-pills li a.active,
+    .nav-pills li a:hover {
+      background: rgba(255, 248, 251, 0.9);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 100px 56px;
+      position: relative;
+    }
+
+    .hero-left {
+      flex: 1;
+      max-width: 560px;
+      padding-left: 60px;   /* ← nudge text right — increase for more */
+    }
+
+    .hero-eyebrow {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-name {
+      font-family: 'Urbanist', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 28px;
+      white-space: nowrap;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-right {
+      flex: 0 0 420px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      height: 420px;
+      margin-right: -60px;
+    }
+
+    .char-placeholder {
+      width: 280px;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(160, 100, 120, 0.4);
+      border: 1.5px dashed rgba(160, 100, 120, 0.25);
+      border-radius: 16px;
+    }
+
+    /* ── PROJECT CARDS ── */
+    .projects {
+      padding: 0 100px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .project-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(252,240,245,0.20) 70%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.75);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding: 55px 78px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 32px rgba(210, 140, 170, 0.33), 0 2px 8px rgba(200, 120, 155, 0.08);
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(210, 140, 170, 0.22), 0 4px 12px rgba(200, 120, 155, 0.12);
+    }
+
+    .card-media {
+      flex: 0 0 420px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* ── UI/UX: 3 phone screens, video swap on hover ── */
+    .phone-stack {
+      position: relative;
+      width: 380px;             /* ← total width for 3 phones spread */
+      height: 300px;
+    }
+    .phone-mockup {
+      position: absolute;
+      width: 130px;             /* ← individual phone width at rest */
+      aspect-ratio: 9/19;
+      border-radius: 18px;
+      border: 2px solid rgba(255,255,255,0.7);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      transition: transform 0.4s ease, left 0.4s ease, right 0.4s ease,
+                  top 0.4s ease, opacity 0.3s ease, width 0.4s ease;
+    }
+    .phone-mockup img,
+    .phone-mockup video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      border-radius: 16px;
+      position: absolute; inset: 0;
+      transition: opacity 0.35s ease;
+    }
+    .phone-mockup .vid   { opacity: 0; }
+    .phone-mockup .still { opacity: 1; }
+    .project-card:hover .phone-mockup .vid   { opacity: 1; }
+    .project-card:hover .phone-mockup .still { opacity: 0; }
+    /* default: stacked + tilted, side ones overlap behind center */
+    .phone-mockup.main  { left: 50%; transform: translateX(-50%); z-index: 3; width: 140px; top: 0; }
+    .phone-mockup.left  { left: 10px;  top: 6px; z-index: 2; transform: rotate(-8deg); opacity: 0.55; }
+    .phone-mockup.right { right: 10px; top: 6px; z-index: 2; transform: rotate(8deg);  opacity: 0.55; }
+    /* hover: straighten + spread with gap, no overlap
+       3 phones × 130px + 2 gaps × 12px = 390px — fits in 380px stack */
+    .project-card:hover .phone-mockup.left  { left: 0;   top: 0; transform: rotate(0deg); opacity: 1; width: 118px; }
+    .project-card:hover .phone-mockup.main  { left: 50%; transform: translateX(-50%);     opacity: 1; width: 118px; top: 0; }
+    .project-card:hover .phone-mockup.right { right: 0;  top: 0; transform: rotate(0deg); opacity: 1; width: 118px; }
+
+    /* ── MOTION GRAPHICS: single looping video (landscape-ish) ── */
+    .mg-media {
+      width: 340px;
+      height: 240px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+      transition: box-shadow 0.35s ease;
+    }
+    .mg-media video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.45s ease;
+      transform-origin: center center;
+    }
+    .project-card:hover .mg-media video { transform: scale(1.18); }
+    .project-card:hover .mg-media { box-shadow: 0 16px 48px rgba(0,0,0,0.26); }
+
+    /* ── GRAPHIC DESIGN: 3 fanned portrait images ──
+       Each image: 130px wide, aspect 4/5 → 163px tall
+       Stack: 3×130 + 2×14 gap = 418px wide, 200px tall
+       At rest: fanned with visible offset
+       On hover: left@0, centre@144, right@288 → 14px gap each ✓ */
+    .gd-stack {
+      position: relative;
+      width: 418px;
+      height: 200px;
+    }
+    .gd-img {
+      position: absolute;
+      width: 130px;
+      aspect-ratio: 4/5;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      top: 50%;
+      transition: transform 0.4s ease, left 0.4s ease, opacity 0.3s ease;
+    }
+    .gd-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* at rest: fanned with visible offset — overlap but not stacked */
+    .gd-img.main  { left: 144px; transform: translateY(-50%) rotate(0deg);    z-index: 3; }
+    .gd-img.left  { left: 55px;  transform: translateY(-50%) rotate(-10deg);  z-index: 2; opacity: 0.6; }
+    .gd-img.right { left: 233px; transform: translateY(-50%) rotate(10deg);   z-index: 2; opacity: 0.6; }
+    /* hover: spread to guaranteed no-overlap positions */
+    .project-card:hover .gd-img.left  { left: 0px;   transform: translateY(-50%) rotate(0deg); opacity: 1; }
+    .project-card:hover .gd-img.main  { left: 144px; transform: translateY(-50%) rotate(0deg); }
+    .project-card:hover .gd-img.right { left: 288px; transform: translateY(-50%) rotate(0deg); opacity: 1; }
+
+    .card-text { flex: 1; padding-left: 8px; }
+
+    .card-title {
+      font-family: 'Urbanist', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+
+    .card-subtitle {
+      font-size: 1rem;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+    }
+
+    /* Option C button — warm ghost green, fills sage on hover */
+    .btn-case {
+      display: inline-block;
+      padding: 11px 24px;
+      border-radius: 100px;
+      border: 1.5px solid #b0c060;
+      background: rgba(176,192,80,0.12);
+      color: #5e6e2a;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+    .btn-case:hover {
+      background: #c8d98a;
+      color: #4a5820;
+      border-color: #c8d98a;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-size: 0.78rem;
+      color: rgba(80, 50, 65, 0.45);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 14px 28px; }
+      .nav-pills li a { padding: 7px 13px; font-size: 0.75rem; }
+      .hero { flex-direction: column; padding: 90px 40px 40px; gap: 32px; }
+      .hero-name { white-space: normal; }
+      .hero-right { flex: none; height: auto; margin-right: 0; }
+      .char-placeholder { width: 200px; height: 240px; }
+      .projects { padding: 0 40px 60px; }
+      .project-card { flex-direction: column; padding: 28px 32px; }
+      .card-media { flex: none; height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="Katelyn Gunawan logo" />
+      <span>Katelyn Gunawan</span>
+    </a>
+    <ul class="nav-pills" id="navPills">
+      <li><a href="uiux.html">UI/UX</a></li>
+      <li><a href="motiongraphics.html">Motion Graphics</a></li>
+      <li><a href="graphicdesigns.html">Graphic Design</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Hello, I'm</p>
+      <h1 class="hero-name">Katelyn Gunawan</h1>
+      <p class="hero-desc">A multi-disciplinary designer studying at UC Davis with a focus on UI/UX Design and Motion Graphics.</p>
+    </div>
+
+    <div class="hero-right">
+      <!-- Logo GIF -->
+      <img src="logogif.gif" alt="Katelyn Gunawan logo animation" style="height:100%;max-height:420px;object-fit:contain;">
+    </div>
+  </section>
+
+  <!-- CATEGORY CARDS -->
+  <div class="projects">
+
+    <!-- UI/UX -->
+    <a href="uiux.html" class="project-card">
+      <div class="card-media">
+        <div class="phone-stack">
+          <div class="phone-mockup left">
+            <img class="still" src="pridentity/hifi3.png" alt="" />
+            <video class="vid" src="pridentity/hifivid2.mov" autoplay loop muted playsinline></video>
+          </div>
+          <div class="phone-mockup main">
+            <img class="still" src="pridentity/hifi2.png" alt="" />
+            <video class="vid" src="pridentity/hifivid1.mov" autoplay loop muted playsinline></video>
+          </div>
+          <div class="phone-mockup right">
+            <img class="still" src="ucdavisapp/hifi1.png" alt="" />
+            <video class="vid" src="ucdavisapp/hifivid1.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+      </div>
+      <div class="card-text">
+        <h2 class="card-title">UI/UX</h2>
+        <p class="card-subtitle">Product design, user experience, and interaction</p>
+        <span class="btn-case">View</span>
+      </div>
+    </a>
+
+    <!-- Motion Graphics -->
+    <a href="motiongraphics.html" class="project-card">
+      <div class="card-media">
+        <div class="mg-media">
+          <video src="motiongraphics/mlpsaturated.mp4" autoplay loop muted playsinline></video>
+        </div>
+      </div>
+      <div class="card-text">
+        <h2 class="card-title">Motion Graphics</h2>
+        <p class="card-subtitle">Animation, motion design, and visual storytelling</p>
+        <span class="btn-case">View</span>
+      </div>
+    </a>
+
+    <!-- Graphic Design -->
+    <a href="graphicdesigns.html" class="project-card">
+      <div class="card-media">
+        <div class="gd-stack">
+          <div class="gd-img left"><img src="graphicdesigns/princessandpea/6.png" alt="" /></div>
+          <div class="gd-img main"><img src="graphicdesigns/lastunicorn/killingmoon.png" alt="" /></div>
+          <div class="gd-img right"><img src="graphicdesigns/kbeauty/glowonthego.png" alt="" /></div>
+        </div>
+      </div>
+      <div class="card-text">
+        <h2 class="card-title">Graphic Design</h2>
+        <p class="card-subtitle">Editorial, branding, and visual communication</p>
+        <span class="btn-case">View</span>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:10px;">
+    <a href="mailto:kategunawan@gmail.com" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      kategunawan@gmail.com
+    </a>
+    <span style="color:rgba(200,160,175,0.4);">·</span>
+    <a href="https://www.linkedin.com/in/katelyn-gunawan-74b05734a" target="_blank" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/katelyn-gunawan
+    </a>
+  </div>
+  <p style="font-size:0.75rem;color:rgba(80,50,65,0.35);letter-spacing:0.05em;">© Katelyn Gunawan</p>
+</footer>
+
+  <script>
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, scrollY = 0, mouse = { x: -999, y: -999 };
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+    const bubbles = [];
+    const BUBBLE_COUNT = 38;
+
+    function bubbleColor(normY) {
+      /* transition to green happens sooner — at 0.25 instead of 0.45 */
+      if (normY < 0.25) {
+        const cols = [[250,210,220],[252,220,210],[248,205,218],[252,225,215]];
+        return cols[Math.floor(Math.random() * cols.length)];
+      } else {
+        const cols = [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]];
+        return cols[Math.floor(Math.random() * cols.length)];
+      }
+    }
+
+    for (let i = 0; i < BUBBLE_COUNT; i++) {
+      const normY = Math.random();
+      const [r, g, b] = bubbleColor(normY);
+      bubbles.push({
+        x: Math.random() * 1.2 - 0.1, y: normY, pageH: 2.8,
+        r0: 14 + Math.random() * 38,
+        drift: (Math.random() - 0.5) * 0.00055,       /* ← faster horizontal drift */
+        floatSpeed: 0.00022 + Math.random() * 0.00032, /* ← faster float bob */
+        floatAmp: 10 + Math.random() * 22,             /* ← bigger float amplitude */
+        floatOffset: Math.random() * Math.PI * 2,
+        alpha: 0.62 + Math.random() * 0.20,
+        r, g, b, vx: 0, vy: 0,
+      });
+    }
+
+    const wave = { amp: 18, freq: 0.0045, speed: 0.012, phase: 0, yBase: 0.88 };
+    let t = 0;
+
+    function draw() {
+      t += 1;
+      ctx.clearRect(0, 0, W, H);
+
+      const grad = ctx.createLinearGradient(0, 0, 0, H);
+      grad.addColorStop(0,    '#fce8ef');
+      grad.addColorStop(0.45, '#fef0f4');
+      grad.addColorStop(1,    '#ffffff');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      bubbles.forEach(b => {
+        const screenX = b.x * W;
+        const pagePixelY = b.y * b.pageH * H;
+        const screenY = pagePixelY - scrollY + Math.sin(t * b.floatSpeed * 60 + b.floatOffset) * b.floatAmp;
+        if (screenY < -80 || screenY > H + 80) return;
+        b.x += b.drift;
+        if (b.x < -0.1) b.x = 1.1;
+        if (b.x > 1.1) b.x = -0.1;
+        const ddx = screenX - mouse.x, ddy = screenY - mouse.y;
+        const md = Math.sqrt(ddx*ddx + ddy*ddy);
+        if (md < 260 && md > 0) {
+          /* repel away from cursor */
+          const force = (260 - md) / 260 * 2.2;
+          b.vx += (ddx / md) * force;
+          b.vy += (ddy / md) * force;
+        }
+        b.vx *= 0.86; b.vy *= 0.86;
+        const bx = b.x * W + b.vx;
+        const by = screenY + b.vy;
+        const fill = ctx.createRadialGradient(bx, by, 0, bx, by, b.r0);
+        fill.addColorStop(0,   `rgba(${b.r},${b.g},${b.b},${b.alpha})`);
+        fill.addColorStop(0.6, `rgba(${b.r},${b.g},${b.b},${b.alpha * 0.6})`);
+        fill.addColorStop(1,   `rgba(${b.r},${b.g},${b.b},0)`);
+        ctx.beginPath();
+        ctx.arc(bx, by, b.r0, 0, Math.PI * 2);
+        ctx.fillStyle = fill;
+        ctx.fill();
+      });
+
+      wave.phase += wave.speed;
+      const waveY = wave.yBase * H - scrollY * 0.15;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(0, waveY + Math.sin(wave.phase) * wave.amp);
+      for (let x = 1; x <= W; x += 2) {
+        const y = waveY + Math.sin(x * wave.freq + wave.phase) * wave.amp;
+        ctx.lineTo(x, y);
+      }
+      const wg = ctx.createLinearGradient(0, 0, W, 0);
+      wg.addColorStop(0,    'rgba(235,150,180,0)');
+      wg.addColorStop(0.15, 'rgba(225,140,170,0.45)');
+      wg.addColorStop(0.5,  'rgba(210,125,160,0.6)');
+      wg.addColorStop(0.85, 'rgba(225,140,170,0.45)');
+      wg.addColorStop(1,    'rgba(235,150,180,0)');
+      ctx.strokeStyle = wg;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, waveY + 24 + Math.sin(wave.phase * 0.8 + 1.2) * (wave.amp * 0.5));
+      for (let x = 1; x <= W; x += 2) {
+        const y = waveY + 24 + Math.sin(x * wave.freq * 0.85 + wave.phase * 0.8 + 1.2) * (wave.amp * 0.5);
+        ctx.lineTo(x, y);
+      }
+      const wg2 = ctx.createLinearGradient(0, 0, W, 0);
+      wg2.addColorStop(0,   'rgba(180,215,175,0)');
+      wg2.addColorStop(0.2, 'rgba(165,205,160,0.3)');
+      wg2.addColorStop(0.5, 'rgba(155,200,150,0.4)');
+      wg2.addColorStop(0.8, 'rgba(165,205,160,0.3)');
+      wg2.addColorStop(1,   'rgba(180,215,175,0)');
+      ctx.strokeStyle = wg2;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.restore();
+
+      if (mouse.x > 0) {
+        const mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 200);
+        mg.addColorStop(0,   'rgba(250,185,210,0.22)');
+        mg.addColorStop(0.5, 'rgba(250,185,210,0.08)');
+        mg.addColorStop(1,   'rgba(250,185,210,0)');
+        ctx.fillStyle = mg;
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, 200, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+
+  <!-- ── CUSTOM CURSOR + TRAIL ── -->
+  <style>
+    /* ── FADE-IN ON SCROLL ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── STAGGERED CARD DELAY ── */
+    .project-card:nth-child(1) { transition-delay: 0s; }
+    .project-card:nth-child(2) { transition-delay: 0.12s; }
+    .project-card:nth-child(3) { transition-delay: 0.24s; }
+  </style>
+
+  <script>
+    /* ── FADE-IN ON SCROLL (IntersectionObserver) ── */
+    document.querySelectorAll('.project-card, .projects').forEach(el => {
+      el.classList.add('fade-in');
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── 3D CARD TILT removed ── */
+
+    /* ── PARALLAX on hero GIF ── */
+    const heroGif = document.querySelector('.hero-right img');
+    window.addEventListener('scroll', () => {
+      if (heroGif) {
+        heroGif.style.transform = `translateY(${window.scrollY * 0.18}px)`;
+      }
+    });
+
+  </script>
+</body>
+</html>

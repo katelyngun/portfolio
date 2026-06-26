@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motion Graphics — Katelyn Gunawan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text-dark: #2c2c2c;
+      --text-mid: #555;
+      --accent: #c47a8a;
+      --green-btn: #7a9e6e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 300;
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+    }
+
+    #bg-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1; pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 80px;
+    }
+            .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px;
+      padding: 4px 16px 4px 6px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+    .nav-logo img {
+      height: 46px; object-fit: contain; display: block;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo span {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text-dark); letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+    .nav-logo:hover img   { transform: scale(1.15); }
+    .nav-logo:hover span  { color: #7a9e6e; }
+    .nav-pills {
+      display: flex; list-style: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px; padding: 5px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+    .nav-pills li a {
+      display: block; padding: 8px 20px; border-radius: 100px;
+      font-size: 0.83rem; font-weight: 400; color: var(--text-dark);
+      text-decoration: none; white-space: nowrap; letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .nav-pills li a.active,
+    .nav-pills li a:hover {
+      background: rgba(255,248,251,0.9); box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    /* ── COMPACT HERO ── */
+    .hero {
+      padding: 110px 100px 40px;
+      display: flex; align-items: flex-end;
+    }
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 700;
+      color: var(--text-dark); line-height: 1.1; letter-spacing: -0.01em;
+    }
+
+    /* ── VIDEO GRID ── */
+    .grid-wrap {
+      padding: 28px 100px 80px;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* lone bottom card centred */
+    .video-grid .solo {
+      grid-column: 1 / -1;
+      max-width: calc(50% - 14px);
+      margin: 0 auto;
+    }
+
+    /* ── VIDEO CARD ── */
+    .video-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(252,240,245,0.20) 70%);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.75); border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 32px rgba(210,140,170,0.20), 0 2px 8px rgba(200,120,155,0.08);
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 48px rgba(210,140,170,0.28), 0 4px 12px rgba(200,120,155,0.12);
+    }
+
+    /* thumbnail wrapper — 16:9 */
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    .card-thumb video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    /* play icon overlay on thumb */
+    .play-icon {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0);
+      opacity: 0;
+      transition: opacity 0.25s, background 0.25s;
+    }
+    .video-card:hover .play-icon {
+      opacity: 1;
+      background: rgba(0,0,0,0.32);
+    }
+    .play-icon svg {
+      width: 52px; height: 52px;
+      fill: rgba(255,255,255,0.88);
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+      transition: transform 0.25s;
+    }
+    .video-card:hover .play-icon svg { transform: scale(1.1); }
+
+    /* card footer */
+    .card-footer {
+      padding: 14px 22px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .card-title {
+      font-size: 0.95rem; font-weight: 500;
+      color: var(--text-dark); letter-spacing: 0.02em;
+    }
+    /* subtle "read more" hint — visible always but very quiet, pops on hover */
+    .card-hint {
+      font-size: 0.72rem; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--accent); opacity: 0.45; white-space: nowrap;
+      transition: opacity 0.25s;
+      flex-shrink: 0;
+    }
+    .video-card:hover .card-hint { opacity: 1; }
+
+    /* ── OVERLAY ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      align-items: center; justify-content: center;
+    }
+    .overlay.open { display: flex; }
+
+    .overlay-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(20, 10, 15, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .overlay-panel {
+      position: relative; z-index: 1;
+      width: min(820px, 92vw);
+      background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(252,238,244,0.80) 100%);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.85);
+      border-radius: 24px;
+      box-shadow: 0 24px 80px rgba(180,100,140,0.22), 0 4px 16px rgba(180,100,140,0.10);
+      overflow: hidden;
+      animation: panelIn 0.28s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes panelIn {
+      from { opacity: 0; transform: scale(0.94) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .overlay-video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #111;
+      position: relative;
+    }
+    .overlay-video-wrap video {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .overlay-body {
+      padding: 24px 32px 30px;
+    }
+    .overlay-title {
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 10px; letter-spacing: 0.01em;
+    }
+    .overlay-desc {
+      font-size: 0.95rem; color: var(--text-mid); font-weight: 300;
+      line-height: 1.85; letter-spacing: 0.04em;
+    }
+    .overlay-social-row {
+      display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .btn-social {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 18px; border-radius: 100px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-social:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-social.instagram {
+      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+      color: #fff;
+    }
+    .btn-social.tiktok {
+      background: #010101; color: #fff;
+    }
+    .btn-social svg { width: 14px; height: 14px; fill: #fff; flex-shrink: 0; }
+    .overlay-music {
+      margin-top: 14px;
+      font-size: 0.72rem; color: rgba(120,90,105,0.45);
+      font-weight: 300; letter-spacing: 0.06em; font-style: italic;
+    }
+
+    /* close button */
+    .overlay-close {
+      position: absolute; top: 14px; right: 16px; z-index: 2;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+    .overlay-close:hover { background: rgba(255,255,255,0.95); transform: scale(1.08); }
+    .overlay-close svg { width: 16px; height: 16px; stroke: #555; stroke-width: 2; }
+
+    footer {
+      text-align: center; padding: 40px;
+      font-size: 0.78rem; color: rgba(80,50,65,0.45); letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 800px) {
+      nav { padding: 14px 28px; }
+      .nav-pills li a { padding: 7px 13px; font-size: 0.75rem; }
+      .hero { padding: 90px 40px 28px; }
+      .grid-wrap { padding: 20px 28px 60px; }
+      .video-grid { grid-template-columns: 1fr; gap: 20px; }
+      .video-grid .solo { max-width: 100%; }
+      .overlay-body { padding: 18px 20px 22px; }
+    }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="Katelyn Gunawan logo" />
+      <span>Katelyn Gunawan</span>
+    </a>
+  <ul class="nav-pills">
+      <li><a href="uiux.html">UI/UX</a></li>
+      <li><a href="motiongraphics.html" class="active">Motion Graphics</a></li>
+      <li><a href="graphicdesigns.html">Graphic Design</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="hero-title">Motion Graphics</h1>
+</section>
+
+<!-- VIDEO GRID -->
+<div class="grid-wrap">
+  <div class="video-grid">
+
+    <!-- 1: MLP -->
+    <div class="video-card" id="mlp-card" onclick="openOverlay(
+      'motiongraphics/mlpsaturated.mp4',
+      'My Little Metro Editorial',
+      'A motion graphics piece created for the editorial photoshoot My Little Metro, reimagining the world of My Little Pony through the lens of the 2000s Fruitiger Metro aesthetic. Drawing inspiration from nostalgic kids channel openings and old iPod advertisements, I played with rotoscoping and dynamic 3D camera movements to bring the shoot to life.',
+      'mlp',
+      'Music: Girl like Me by PinkPantheress'
+    )">
+      <div class="card-thumb">
+        <video src="motiongraphics/mlpsaturated.mp4" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">My Little Metro Editorial</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 2: Storybook -->
+    <div class="video-card" onclick="openOverlay('motiongraphics/STORYBOOKLORELAI.mov', 'The Last Unicorn Editorial', 'An animated visual narrative created for an editorial photoshoot I co-creative directed, centered the tale of The Last Unicorn. Inspired by the magic of childhood pop-up books, I layered photographs from the shoot with the film backdrops and atmospheric graphics to create a whimsical, three-dimensional, and nostalgic journey through the fantasy world while bringing my shoot to life.')">
+      <div class="card-thumb">
+        <video src="motiongraphics/STORYBOOKLORELAI.mov" autoplay loop muted playsinline style="object-fit:cover; transform:scale(1.35); transform-origin:center;"></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">The Last Unicorn Editorial</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 3: Princess and the Pea -->
+    <div class="video-card" onclick="openOverlay('motiongraphics/Princess_and_the_Pea_Video_copy.mp4', 'Princess and the Pea Editorial', 'A music video-style motion graphics piece created for an editorial photoshoot I co-creative directed and styled, reimagining the fairytale of The Princess and the Pea through a playful pop lens. Blending mixed media elements, vibrant color palettes, and energetic motion, I expressed the aesthetic vision of my editorial.', null, 'Music: Good Girls by Charli xcx')">
+      <div class="card-thumb">
+        <video src="motiongraphics/princessandpea.mp4" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">Princess and the Pea Editorial</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 4: Fashion Blog -->
+    <div class="video-card" onclick="openOverlay('motiongraphics/fashionblog.mov', 'My Website: Katelyn\'s Fashion Blog', 'To introduce a personal fashion blog I created, I made a motion graphics trailer that captures the user experience of the website. By animating my hand-drawn logo and simulating key user interactions in After Effects, I showcased the visual identity and user journey of my site.')">
+      <div class="card-thumb">
+        <video src="motiongraphics/fashionblog.mov" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">My Website: Katelyn's Fashion Blog</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 5: Sophie -->
+    <div class="video-card" onclick="openOverlay('motiongraphics/sophie.mov', 'Tribute to Artist Sophie', 'A tribute motion graphics piece exploring the work of the artist SOPHIE and her ideas surrounding gender and music. Drawing from her hyperfeminine, hyperpop aesthetic, I combined surreal visuals and transcendent imagery to communicate both her distinctive artistic style and her vision of identity as something fluid and self-constructed.')">
+      <div class="card-thumb">
+        <video src="motiongraphics/sophie.mov" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">Tribute to Artist Sophie</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 6: Chaos vs Order -->
+    <div class="video-card" onclick="openOverlay('motiongraphics/orderchaos.mov', 'Chaos vs Order', 'A motion graphics study depicting the opposing concepts of order and chaos. A visual represetation of each concept through contrasting motion, composition, and pacing.')">
+      <div class="card-thumb">
+        <video src="motiongraphics/orderchaos.mov" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">Chaos vs Order</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+    <!-- 7: Alphabet Soup (solo, centred) -->
+    <div class="video-card solo" onclick="openOverlay('motiongraphics/alphabetsoup.mov', 'Alphabet Soup', 'A study of typography in motion that transforms the alphabet into an engaging visual narrative. The piece explores the storytelling capabilities of letterforms.')">
+      <div class="card-thumb">
+        <video src="motiongraphics/alphabetsoup.mov" autoplay loop muted playsinline></video>
+        <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
+      </div>
+      <div class="card-footer"><p class="card-title">Alphabet Soup</p><span class="card-hint">read more ↗</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="overlay-backdrop" onclick="closeOverlay()"></div>
+  <div class="overlay-panel">
+    <button class="overlay-close" onclick="closeOverlay()" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="overlay-video-wrap">
+      <video id="overlay-video" controls playsinline></video>
+    </div>
+    <div class="overlay-body">
+      <h2 class="overlay-title" id="overlay-title"></h2>
+      <p class="overlay-desc" id="overlay-desc"></p>
+      <div class="overlay-social-row" id="overlay-social"></div>
+      <p class="overlay-music" id="overlay-music"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:10px;">
+    <a href="mailto:kategunawan@gmail.com" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      kategunawan@gmail.com
+    </a>
+    <span style="color:rgba(200,160,175,0.4);">·</span>
+    <a href="https://www.linkedin.com/in/katelyn-gunawan-74b05734a" target="_blank" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/katelyn-gunawan
+    </a>
+  </div>
+  <p style="font-size:0.75rem;color:rgba(80,50,65,0.35);letter-spacing:0.05em;">© Katelyn Gunawan</p>
+</footer>
+
+<script>
+  const SOCIAL_HTML = {
+    mlp: `<a class="btn-social instagram" href="https://www.instagram.com/reel/DZLBj2AgYM8/" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      View on Instagram
+    </a>
+    <a class="btn-social tiktok" href="https://www.tiktok.com/t/ZTSd3EqAC/" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+      View on TikTok
+    </a>`
+  };
+
+  function openOverlay(src, title, desc, socialKey, music) {
+    const overlay = document.getElementById('overlay');
+    const vid = document.getElementById('overlay-video');
+    document.getElementById('overlay-title').textContent = title;
+    document.getElementById('overlay-desc').textContent = desc;
+    document.getElementById('overlay-social').innerHTML = socialKey ? (SOCIAL_HTML[socialKey] || '') : '';
+    document.getElementById('overlay-music').textContent = music || '';
+    vid.src = src;
+    vid.load();
+    vid.play();
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay() {
+    const overlay = document.getElementById('overlay');
+    const vid = document.getElementById('overlay-video');
+    vid.pause();
+    vid.src = '';
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+
+  /* ── BACKGROUND CANVAS ── */
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, scrollY = 0, mouse = { x: -999, y: -999 };
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+  window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+  const bubbles = [];
+  const BUBBLE_COUNT = 38;
+  function bubbleColor(normY) {
+    if (normY < 0.45) {
+      const cols = [[250,210,220],[252,220,210],[248,205,218],[252,225,215]];
+      return cols[Math.floor(Math.random()*cols.length)];
+    } else {
+      const cols = [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]];
+      return cols[Math.floor(Math.random()*cols.length)];
+    }
+  }
+  for (let i = 0; i < BUBBLE_COUNT; i++) {
+    const normY = Math.random(); const [r,g,b] = bubbleColor(normY);
+    bubbles.push({ x: Math.random()*1.2-0.1, y: normY, pageH: 2.8, r0: 14+Math.random()*38,
+      drift: (Math.random()-0.5)*0.00018, floatSpeed: 0.00008+Math.random()*0.00012,
+      floatAmp: 6+Math.random()*14, floatOffset: Math.random()*Math.PI*2,
+      alpha: 0.62+Math.random()*0.20, r, g, b, vx: 0, vy: 0 });
+  }
+  const wave = { amp:18, freq:0.0045, speed:0.012, phase:0, yBase:0.88 };
+  let t = 0;
+  function draw() {
+    t++;
+    ctx.clearRect(0,0,W,H);
+    const grad = ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0,'#fce8ef'); grad.addColorStop(0.45,'#fef0f4'); grad.addColorStop(1,'#ffffff');
+    ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+    bubbles.forEach(b => {
+      const screenX = b.x*W, pagePixelY = b.y*b.pageH*H;
+      const screenY = pagePixelY - scrollY + Math.sin(t*b.floatSpeed*60+b.floatOffset)*b.floatAmp;
+      if (screenY < -80 || screenY > H+80) return;
+      b.x += b.drift; if(b.x<-0.1) b.x=1.1; if(b.x>1.1) b.x=-0.1;
+      const ddx=screenX-mouse.x, ddy=screenY-mouse.y, md=Math.sqrt(ddx*ddx+ddy*ddy);
+      if(md<140&&md>0){const f=(140-md)/140*0.5; b.vx+=(ddx/md)*f; b.vy+=(ddy/md)*f;}
+      b.vx*=0.9; b.vy*=0.9;
+      const bx=b.x*W+b.vx, by=screenY+b.vy;
+      const fill=ctx.createRadialGradient(bx,by,0,bx,by,b.r0);
+      fill.addColorStop(0,`rgba(${b.r},${b.g},${b.b},${b.alpha})`);
+      fill.addColorStop(0.6,`rgba(${b.r},${b.g},${b.b},${b.alpha*0.6})`);
+      fill.addColorStop(1,`rgba(${b.r},${b.g},${b.b},0)`);
+      ctx.beginPath(); ctx.arc(bx,by,b.r0,0,Math.PI*2); ctx.fillStyle=fill; ctx.fill();
+    });
+    wave.phase+=wave.speed; const waveY=wave.yBase*H-scrollY*0.15;
+    ctx.save();
+    ctx.beginPath(); ctx.moveTo(0,waveY+Math.sin(wave.phase)*wave.amp);
+    for(let x=1;x<=W;x+=2) ctx.lineTo(x,waveY+Math.sin(x*wave.freq+wave.phase)*wave.amp);
+    const wg=ctx.createLinearGradient(0,0,W,0);
+    wg.addColorStop(0,'rgba(235,150,180,0)'); wg.addColorStop(0.15,'rgba(225,140,170,0.45)');
+    wg.addColorStop(0.5,'rgba(210,125,160,0.6)'); wg.addColorStop(0.85,'rgba(225,140,170,0.45)');
+    wg.addColorStop(1,'rgba(235,150,180,0)'); ctx.strokeStyle=wg; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0,waveY+24+Math.sin(wave.phase*0.8+1.2)*(wave.amp*0.5));
+    for(let x=1;x<=W;x+=2) ctx.lineTo(x,waveY+24+Math.sin(x*wave.freq*0.85+wave.phase*0.8+1.2)*(wave.amp*0.5));
+    const wg2=ctx.createLinearGradient(0,0,W,0);
+    wg2.addColorStop(0,'rgba(180,215,175,0)'); wg2.addColorStop(0.2,'rgba(165,205,160,0.3)');
+    wg2.addColorStop(0.5,'rgba(155,200,150,0.4)'); wg2.addColorStop(0.8,'rgba(165,205,160,0.3)');
+    wg2.addColorStop(1,'rgba(180,215,175,0)'); ctx.strokeStyle=wg2; ctx.lineWidth=1.2; ctx.stroke();
+    ctx.restore();
+    if(mouse.x>0){
+      const mg=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,200);
+      mg.addColorStop(0,'rgba(250,185,210,0.22)'); mg.addColorStop(0.5,'rgba(250,185,210,0.08)');
+      mg.addColorStop(1,'rgba(250,185,210,0)'); ctx.fillStyle=mg;
+      ctx.beginPath(); ctx.arc(mouse.x,mouse.y,200,0,Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+</body>
+</html>

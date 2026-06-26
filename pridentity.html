@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pridentity — Katelyn Gunawan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --text-dark: #2c2c2c;
+      --text-mid: #555;
+      --green-btn: #7a9e6e;
+      --accent: #c47a8a;
+      --section-gap: 80px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 300;
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      letter-spacing: 0.04em;
+      line-height: 1.9;
+    }
+    #bg-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: -1; pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 80px;
+    }
+            .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px;
+      padding: 4px 16px 4px 6px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+    .nav-logo img {
+      height: 46px; object-fit: contain; display: block;
+      transition: transform 0.3s ease;
+    }
+    .nav-logo span {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text-dark); letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+    .nav-logo:hover img   { transform: scale(1.15); }
+    .nav-logo:hover span  { color: #7a9e6e; }
+    .nav-pills {
+      display: flex; list-style: none;
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px; padding: 5px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
+    }
+    .nav-pills li a {
+      display: block; padding: 8px 20px; border-radius: 100px;
+      font-size: 0.83rem; font-weight: 400; color: var(--text-dark);
+      text-decoration: none; white-space: nowrap; letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .nav-pills li a.active,
+    .nav-pills li a:hover {
+      background: rgba(255,248,251,0.9); box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 80px 100px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 52vh; display: flex; align-items: center;
+      padding-top: 110px; gap: 60px;
+    }
+    .hero-left { flex: 1; }
+    .hero-eyebrow {
+      font-size: 0.9rem; font-weight: 300; color: var(--text-mid);
+      text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 6vw, 5rem); font-weight: 700;
+      color: var(--text-dark); line-height: 1.05; margin-bottom: 10px;
+    }
+    .hero-subtitle {
+      font-size: 1rem; color: var(--text-mid); font-weight: 300; letter-spacing: 0.06em;
+    }
+    .hero-right {
+      flex: 0 0 320px;                        /* ← HERO MOCKUP WIDTH (container) */
+      display: flex; justify-content: flex-end;
+    }
+    .hero-mockup {
+      width: 300px;                            /* ← HERO MOCKUP WIDTH (image itself) */
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(180,120,150,0.22);
+    }
+    .hero-mockup img {
+      width: 100%; display: block;
+    }
+
+    /* ── SHARED ── */
+    section { margin-bottom: var(--section-gap); }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .body-text {
+      font-size: 1rem; color: var(--text-mid); font-weight: 300;
+      line-height: 1.9; letter-spacing: 0.04em;
+    }
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, rgba(200,150,170,0.25), rgba(200,150,170,0.08));
+      margin-bottom: var(--section-gap);
+    }
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(252,240,245,0.25) 100%);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.75); border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 32px rgba(210,140,170,0.15), 0 2px 8px rgba(200,120,155,0.06);
+    }
+    .caption {
+      font-size: 0.8rem; color: var(--text-mid); text-align: center;
+      font-weight: 300; letter-spacing: 0.05em; margin-top: 10px;
+    }
+
+    /* ── PROBLEM / SOLUTION 2-COL ── */
+    .ps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
+    .ps-card { border-radius: 16px; padding: 28px 32px; }
+    .ps-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.65), rgba(252,235,245,0.30));
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 4px 20px rgba(210,140,170,0.12);
+    }
+    .ps-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 10px;
+      color: var(--accent);
+    }
+    .ps-text { font-size: 0.95rem; color: var(--text-mid); font-weight: 300; line-height: 1.8; }
+
+    /* ── SINGLE FULL-WIDTH IMAGE ── */
+    .full-img-card {
+      margin-top: 28px;
+      display: flex; justify-content: center;  /* centers the smaller image */
+    }
+    .full-img-card img {
+      width: 60%;                               /* ← LO-FI IMAGE SIZE (% of content area) */
+      display: block; border-radius: 14px;
+    }
+
+    /* ── MIDFI: full width image ── */
+    .midfi-wrap {
+      margin-top: 28px;
+    }
+    .midfi-wrap img {
+      width: 100%; display: block; border-radius: 14px;
+    }
+
+    /* ── HI-FI GROUPS ── */
+    .hifi-group { margin-top: 28px; }
+    .hifi-group + .hifi-group { margin-top: 52px; }
+
+    /* 3-col row: side phones smaller, center video larger */
+    .phone-row-3 {
+      display: grid;
+      grid-template-columns: 0.8fr 1fr 0.8fr; /* ← SIDE vs CENTER SIZE RATIO */
+      gap: 20px;
+      align-items: center;
+      max-width: 82%;        /* ← PHONE ROW OVERALL SIZE */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .phone-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .hifi-group { margin-top: 28px; }
+    .hifi-group + .hifi-group { margin-top: 90px; } /* ← GAP BETWEEN ROWS */
+    .phone-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(252,240,245,0.25) 100%);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.75); border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 8px 32px rgba(210,140,170,0.15), 0 2px 8px rgba(200,120,155,0.06);
+      overflow: hidden;
+    }
+    .phone-card img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      /* natural aspect ratio ~253x518 ≈ 9:18.4 */
+    }
+    .phone-card video {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      /* videos should match same portrait aspect ratio */
+      aspect-ratio: 9 / 18.4;
+      object-fit: cover;
+      background: #1a1a1a;
+    }
+
+    .hifi-row-caption {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── LIFESTYLE PHOTOS ── */
+    .lifestyle-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+    .lifestyle-row img {
+      width: 100%; display: block; border-radius: 20px;
+      box-shadow: 0 8px 28px rgba(180,120,150,0.18);
+    }
+
+    /* ── CTAs ── */
+    .cta-wrap { display: flex; justify-content: center; gap: 20px; margin-top: 60px; flex-wrap: wrap; }
+        .btn-cta {
+      display: inline-block; padding: 14px 36px;
+      border-radius: 100px; border: 1.5px solid #b0c060;
+      background: rgba(176,192,80,0.12); color: #5e6e2a;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
+      text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
+      box-shadow: none;
+    }
+    .btn-cta:hover { background: #c8d98a; color: #4a5820; border-color: #c8d98a; transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block; padding: 14px 36px;
+      border-radius: 100px; border: 1.5px solid #b0c060;
+      background: rgba(176,192,80,0.12); color: #5e6e2a;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
+      text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-outline:hover { background: #c8d98a; color: #4a5820; border-color: #c8d98a; }
+
+    footer {
+      text-align: center; padding: 40px;
+      font-size: 0.78rem; color: rgba(80,50,65,0.45); letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 800px) {
+      .page { padding: 0 24px 80px; }
+      nav { padding: 14px 20px; }
+      .hero { flex-direction: column; padding-top: 90px; }
+      .ps-grid, .phone-row-3, .lifestyle-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── FADE-IN ON SCROLL ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+      <img src="logo.png" alt="Katelyn Gunawan logo" />
+      <span>Katelyn Gunawan</span>
+    </a>
+  <ul class="nav-pills">
+      <li><a href="uiux.html" class="active">UI/UX</a></li>
+      <li><a href="motiongraphics.html">Motion Graphics</a></li>
+      <li><a href="graphicdesigns.html">Graphic Design</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Case Study</p>
+      <h1 class="hero-title">Pridentity</h1>
+      <p class="hero-subtitle">A Platform for Queer Media</p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-mockup">
+        <img src="pridentity/mockup 1.png" alt="Pridentity app mockup" />
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OVERVIEW -->
+  <section>
+    <p class="section-label">Overview</p>
+    <p class="body-text">
+      Pridentity is a mobile platform designed to uplift queer voices: music, novels, podcasts, and programs that let queer people access the stories that speak to their own lives. Rather than searching scattered platforms, Pridentity is a curated destination where discovering, reviewing, and sharing queer content feels natural and joyful.
+    </p>
+
+    <!-- Problem / Solution -->
+    <div class="ps-grid">
+      <div class="ps-card">
+        <p class="ps-label">Problem</p>
+        <p class="ps-text">Queer audiences struggle to find LGBTQ+ representation in mainstream media platforms. Content is scattered across services with no dedicated discovery experience.</p>
+      </div>
+      <div class="ps-card">
+        <p class="ps-label">Solution</p>
+        <p class="ps-text">A curated mobile platform dedicated to queer media that surfaces LGBTQ+ content across formats in one cohesive, community-driven experience.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- USER RESEARCH -->
+  <section>
+    <p class="section-label">User Research</p>
+    <p class="body-text">
+      Through one-on-one interviews with queer media consumers, I identified key pain points: difficulty discovering genre-specific content, lack of a trusted rating system driven by people who share their identity, and no way to signal media interests through profile labels. Research also surfaced a strong desire for social features — messaging and shared watchlists.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LOW-FIDELITY -->
+  <section>
+    <p class="section-label">Low-Fidelity</p>
+    <p class="body-text">Information architecture and quick paper sketches to test screen flows and navigation structures before committing to visual design.</p>
+    <div class="glass-card full-img-card">
+      <img src="pridentity/pridentitylofi.png" alt="Low-fidelity wireframes and IA" />
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MID-FIDELITY -->
+  <section>
+    <p class="section-label">Mid-Fidelity</p>
+    <p class="body-text">Established layout patterns across core screens while locking in the Pridentity logo mark and colour direction — a deep purple and rainbow accent palette signalling identity and pride.</p>
+    <div class="glass-card midfi-wrap">
+      <img src="pridentity/pridentitymidfi.png" alt="Mid-fidelity screens" />
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HI-FIDELITY -->
+  <section>
+    <p class="section-label">Hi-Fidelity</p>
+    <p class="body-text">With the visual language firmly set, I refined every screen to highlight queer media discovery and community features. Each group below focuses on a distinct user goal.</p>
+
+    <!-- Group 1: Browse queer media — hifi1, hifivid1, hifi2 -->
+    <div class="hifi-group">
+      <div class="phone-row-3">
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi1.png" alt="Hi-fi — home / discover" />
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <video src="pridentity/hifivid1.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi2.png" alt="Hi-fi — browse genres" />
+          </div>
+        </div>
+      </div>
+      <p class="hifi-row-caption body-text">Browse through a diverse range of queer media</p>
+    </div>
+
+    <!-- Group 2: Reviews — hifi3, hifivid2, hifi4 -->
+    <div class="hifi-group">
+      <div class="phone-row-3">
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi3.png" alt="Hi-fi — media detail" />
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <video src="pridentity/hifivid2.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi4.png" alt="Hi-fi — community ratings" />
+          </div>
+        </div>
+      </div>
+      <p class="hifi-row-caption body-text">Review and rating system driven by the community</p>
+    </div>
+
+    <!-- Group 3: Messaging — hifi5, hifivid3, hifi6 -->
+    <div class="hifi-group">
+      <div class="phone-row-3">
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi5.png" alt="Hi-fi — friend activity" />
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <video src="pridentity/hifivid3.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi6.png" alt="Hi-fi — message inbox" />
+          </div>
+        </div>
+      </div>
+      <p class="hifi-row-caption body-text">Message and view other users' activity</p>
+    </div>
+
+    <!-- Group 4: Profile — hifi7, hifivid4, hifi8 -->
+    <div class="hifi-group">
+      <div class="phone-row-3">
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi7.png" alt="Hi-fi — profile overview" />
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <video src="pridentity/hifivid4.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi8.png" alt="Hi-fi — favorites list" />
+          </div>
+        </div>
+      </div>
+      <p class="hifi-row-caption body-text">Show off your "Pridentity" through profile labels and interests displays</p>
+    </div>
+
+    <!-- Group 5: Post review — hifi9, hifivid5, hifi10 -->
+    <div class="hifi-group">
+      <div class="phone-row-3">
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi9.png" alt="Hi-fi — post review" />
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <video src="pridentity/hifivid5.mov" autoplay loop muted playsinline></video>
+          </div>
+        </div>
+        <div class="phone-item">
+          <div class="phone-card">
+            <img src="pridentity/hifi10.png" alt="Hi-fi — favorites all" />
+          </div>
+        </div>
+      </div>
+      <p class="hifi-row-caption body-text">Post your own media ratings or reviews</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LIFESTYLE PHOTOS -->
+  <section>
+    <div class="lifestyle-row">
+      <img src="pridentity/mockup 1.png" alt="Pridentity app on surface" />
+      <img src="pridentity/mockup2.png" alt="Pridentity app in hand" />
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- USABILITY TESTING -->
+  <section>
+    <p class="section-label">Usability Testing</p>
+    <p class="body-text">
+      Conducted moderated usability sessions with participants who identified within the LGBTQ+ community. Key findings informed refinements to the navigation hierarchy and the profile label selection flow.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MOVING FORWARD -->
+  <section>
+    <p class="section-label">Moving Forward</p>
+    <p class="body-text">
+      Next I plan to expand Pridentity into a complete user journey, building further social and community discovery features. The project has deepened my conviction in designing spaces where underrepresented communities can feel genuinely seen.
+    </p>
+  </section>
+
+  <!-- CTAs -->
+  <div class="cta-wrap">
+    <a href="ucdavismobileredesign.html" class="btn-cta">Next Project</a>
+    <a href="uiux.html" class="btn-outline">← Back to All UI/UX</a>
+  </div>
+
+</div>
+
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:10px;">
+    <a href="mailto:kategunawan@gmail.com" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      kategunawan@gmail.com
+    </a>
+    <span style="color:rgba(200,160,175,0.4);">·</span>
+    <a href="https://www.linkedin.com/in/katelyn-gunawan-74b05734a" target="_blank" style="display:flex;align-items:center;gap:7px;text-decoration:none;color:rgba(80,50,65,0.55);font-size:0.78rem;letter-spacing:0.05em;transition:color 0.2s;" onmouseover="this.style.color='#c47a8a'" onmouseout="this.style.color='rgba(80,50,65,0.55)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/katelyn-gunawan
+    </a>
+  </div>
+  <p style="font-size:0.75rem;color:rgba(80,50,65,0.35);letter-spacing:0.05em;">© Katelyn Gunawan</p>
+</footer>
+
+<script>
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, scrollY = 0, mouse = { x: -999, y: -999 };
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+const bubbles = [];
+const BUBBLE_COUNT = 38;
+function bubbleColor(normY) {
+  if (normY < 0.45) {
+    const cols = [[250,210,220],[252,220,210],[248,205,218],[252,225,215]];
+    return cols[Math.floor(Math.random()*cols.length)];
+  } else {
+    const cols = [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]];
+    return cols[Math.floor(Math.random()*cols.length)];
+  }
+}
+for (let i = 0; i < BUBBLE_COUNT; i++) {
+  const normY = Math.random(); const [r,g,b] = bubbleColor(normY);
+  bubbles.push({ x: Math.random()*1.2-0.1, y: normY, pageH: 2.8, r0: 14+Math.random()*38,
+    drift: (Math.random()-0.5)*0.00018, floatSpeed: 0.00008+Math.random()*0.00012,
+    floatAmp: 6+Math.random()*14, floatOffset: Math.random()*Math.PI*2,
+    alpha: 0.62+Math.random()*0.20, r, g, b, vx: 0, vy: 0 });
+}
+const wave = { amp:18, freq:0.0045, speed:0.012, phase:0, yBase:0.88 };
+let t = 0;
+function draw() {
+  t++;
+  ctx.clearRect(0,0,W,H);
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'#fce8ef'); grad.addColorStop(0.45,'#fef0f4'); grad.addColorStop(1,'#ffffff');
+  ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
+  bubbles.forEach(b => {
+    const screenX = b.x*W, pagePixelY = b.y*b.pageH*H;
+    const screenY = pagePixelY - scrollY + Math.sin(t*b.floatSpeed*60+b.floatOffset)*b.floatAmp;
+    if (screenY < -80 || screenY > H+80) return;
+    b.x += b.drift; if(b.x<-0.1) b.x=1.1; if(b.x>1.1) b.x=-0.1;
+    const ddx=screenX-mouse.x, ddy=screenY-mouse.y, md=Math.sqrt(ddx*ddx+ddy*ddy);
+    if(md<140&&md>0){const f=(140-md)/140*0.5; b.vx+=(ddx/md)*f; b.vy+=(ddy/md)*f;}
+    b.vx*=0.9; b.vy*=0.9;
+    const bx=b.x*W+b.vx, by=screenY+b.vy;
+    const fill=ctx.createRadialGradient(bx,by,0,bx,by,b.r0);
+    fill.addColorStop(0,`rgba(${b.r},${b.g},${b.b},${b.alpha})`);
+    fill.addColorStop(0.6,`rgba(${b.r},${b.g},${b.b},${b.alpha*0.6})`);
+    fill.addColorStop(1,`rgba(${b.r},${b.g},${b.b},0)`);
+    ctx.beginPath(); ctx.arc(bx,by,b.r0,0,Math.PI*2); ctx.fillStyle=fill; ctx.fill();
+  });
+  wave.phase+=wave.speed; const waveY=wave.yBase*H-scrollY*0.15;
+  ctx.save();
+  ctx.beginPath(); ctx.moveTo(0,waveY+Math.sin(wave.phase)*wave.amp);
+  for(let x=1;x<=W;x+=2) ctx.lineTo(x,waveY+Math.sin(x*wave.freq+wave.phase)*wave.amp);
+  const wg=ctx.createLinearGradient(0,0,W,0);
+  wg.addColorStop(0,'rgba(235,150,180,0)'); wg.addColorStop(0.15,'rgba(225,140,170,0.45)');
+  wg.addColorStop(0.5,'rgba(210,125,160,0.6)'); wg.addColorStop(0.85,'rgba(225,140,170,0.45)');
+  wg.addColorStop(1,'rgba(235,150,180,0)'); ctx.strokeStyle=wg; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,waveY+24+Math.sin(wave.phase*0.8+1.2)*(wave.amp*0.5));
+  for(let x=1;x<=W;x+=2) ctx.lineTo(x,waveY+24+Math.sin(x*wave.freq*0.85+wave.phase*0.8+1.2)*(wave.amp*0.5));
+  const wg2=ctx.createLinearGradient(0,0,W,0);
+  wg2.addColorStop(0,'rgba(180,215,175,0)'); wg2.addColorStop(0.2,'rgba(165,205,160,0.3)');
+  wg2.addColorStop(0.5,'rgba(155,200,150,0.4)'); wg2.addColorStop(0.8,'rgba(165,205,160,0.3)');
+  wg2.addColorStop(1,'rgba(180,215,175,0)'); ctx.strokeStyle=wg2; ctx.lineWidth=1.2; ctx.stroke();
+  ctx.restore();
+  if(mouse.x>0){
+    const mg=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,200);
+    mg.addColorStop(0,'rgba(250,185,210,0.22)'); mg.addColorStop(0.5,'rgba(250,185,210,0.08)');
+    mg.addColorStop(1,'rgba(250,185,210,0)'); ctx.fillStyle=mg;
+    ctx.beginPath(); ctx.arc(mouse.x,mouse.y,200,0,Math.PI*2); ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>
