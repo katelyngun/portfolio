@@ -361,7 +361,6 @@
       .hero { flex-direction: column; padding: 90px 40px 40px; gap: 32px; }
       .hero-name { white-space: normal; }
       .hero-right { flex: none; height: auto; margin-right: 0; }
-      .char-placeholder { width: 200px; height: 240px; }
       .projects { padding: 0 40px 60px; }
       .project-card { flex-direction: column; padding: 28px 32px; }
       .card-media { flex: none; height: 200px; }
@@ -369,15 +368,86 @@
 
     /* ── MOBILE RESPONSIVE ── */
     @media (max-width: 768px) {
-      nav {
-        padding: 12px 20px;
-      }
+      /* nav */
+      nav { padding: 12px 20px; }
+      .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
       .nav-logo img { height: 32px; }
       .nav-logo span { font-size: 0.78rem; }
-      .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
-      .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
       .nav-pills { padding: 3px; }
+      .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
+
+      /* hero — centered, gif small, text centered */
+      .hero {
+        flex-direction: column-reverse; /* gif on top, text below */
+        align-items: center;
+        text-align: center;
+        padding: 90px 24px 24px;
+        gap: 16px;
+        min-height: unset;
+      }
+      .hero-left { padding-left: 0; max-width: 100%; }
+      .hero-eyebrow { text-align: center; }
+      .hero-name {
+        font-size: clamp(2rem, 8vw, 2.8rem);
+        white-space: normal;
+        text-align: center;
+      }
+      .hero-desc { text-align: center; font-size: 0.9rem; }
+      .hero-right {
+        flex: none; width: 100%;
+        display: flex; justify-content: center;
+        height: auto;
+      }
+      .hero-right img { max-height: 140px; object-fit: contain; }
+
+      .hero-right img { max-height: 110px; object-fit: contain; }
+
+      /* cards */
+      .projects { padding: 16px 16px 60px; gap: 16px; }
+      .project-card {
+        flex-direction: column;
+        padding: 20px 18px;
+        gap: 16px;
+        align-items: center;
+      }
+      .card-media {
+        flex: none; width: 100%;
+        height: 130px;
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
+      }
+      .card-text { text-align: center; width: 100%; }
+      .card-title { font-size: clamp(1.4rem, 6vw, 2rem); }
+      .btn-case { display: block; width: fit-content; margin: 0 auto; }
+
+      /* UI/UX phone stack */
+      .phone-stack {
+        position: relative;
+        width: 160px; height: 130px;
+        margin: 0 auto; flex-shrink: 0;
+      }
+      .phone-mockup { width: 58px; border-radius: 12px; }
+      .phone-mockup.main  { left: 50%; transform: translateX(-50%); width: 64px; top: 0; }
+      .phone-mockup.left  { left: 6px;  top: 4px; transform: rotate(-8deg); opacity: 0.55; }
+      .phone-mockup.right { right: 6px; top: 4px; transform: rotate(8deg);  opacity: 0.55; }
+      .project-card:hover .phone-mockup.left  { left: 6px;  top: 4px; transform: rotate(-8deg); width: 58px; }
+      .project-card:hover .phone-mockup.main  { left: 50%; transform: translateX(-50%); width: 64px; }
+      .project-card:hover .phone-mockup.right { right: 6px; top: 4px; transform: rotate(8deg); width: 58px; }
+
+      /* motion graphics */
+      .mg-media { width: 160px; height: 110px; margin: 0 auto; flex-shrink: 0; }
+
+      /* graphic design stack */
+      .gd-stack { width: 160px; height: 130px; margin: 0 auto; flex-shrink: 0; }
+      .gd-img { width: 58px; }
+      .gd-img.main  { left: 51px;  transform: translateY(-50%) rotate(0deg); }
+      .gd-img.left  { left: 8px;   transform: translateY(-50%) rotate(-10deg); }
+      .gd-img.right { left: 94px;  transform: translateY(-50%) rotate(10deg); }
+      .project-card:hover .gd-img.left  { left: 8px;  transform: translateY(-50%) rotate(-10deg); opacity: 0.6; }
+      .project-card:hover .gd-img.main  { left: 51px; transform: translateY(-50%) rotate(0deg); }
+      .project-card:hover .gd-img.right { left: 94px; transform: translateY(-50%) rotate(10deg); opacity: 0.6; }
     }
+
     @media (max-width: 480px) {
       .nav-pills li a { padding: 5px 8px; font-size: 0.65rem; letter-spacing: 0; }
       .nav-logo span { display: none; }
