@@ -366,6 +366,23 @@
       .project-card { flex-direction: column; padding: 28px 32px; }
       .card-media { flex: none; height: 200px; }
     }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 12px 20px;
+      }
+      .nav-logo img { height: 32px; }
+      .nav-logo span { font-size: 0.78rem; }
+      .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
+      .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
+      .nav-pills { padding: 3px; }
+    }
+    @media (max-width: 480px) {
+      .nav-pills li a { padding: 5px 8px; font-size: 0.65rem; letter-spacing: 0; }
+      .nav-logo span { display: none; }
+      .nav-logo img { height: 30px; }
+    }
   </style>
 </head>
 <body>
@@ -661,22 +678,5 @@
     });
 
   </script>
-
-
-  /* ── MOBILE RESPONSIVE ── */
-@media (max-width: 768px) {
-  nav { padding: 12px 20px; }
-  .nav-logo img { height: 32px; }
-  .nav-logo span { font-size: 0.78rem; }
-  .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
-  .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
-  .nav-pills { padding: 3px; }
-}
-@media (max-width: 480px) {
-  .nav-pills li a { padding: 5px 8px; font-size: 0.65rem; letter-spacing: 0; }
-  .nav-logo span { display: none; }
-  .nav-logo img { height: 30px; }
-}
-  
 </body>
 </html>
