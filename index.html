@@ -53,7 +53,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 80px;
+      padding: 22px 80px;
     }
 
     .nav-logo {
@@ -64,17 +64,19 @@
       -webkit-backdrop-filter: blur(18px) saturate(1.4);
       border: 1px solid rgba(255,255,255,0.70);
       border-radius: 100px;
-      padding: 4px 16px 4px 6px;
+      padding: 6px 18px 6px 6px;
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
     .nav-logo img {
-      height: 46px; object-fit: contain; display: block;
+      height: 46px; width: 46px;
+      object-fit: contain; object-position: center;
+      display: block; flex-shrink: 0;
       transition: transform 0.3s ease;
     }
     .nav-logo span {
       font-family: 'Urbanist', sans-serif;
-      font-size: 1.05rem; font-weight: 400;
+      font-size: 1.12rem; font-weight: 400;
       color: var(--text-dark); letter-spacing: 0.04em;
       transition: color 0.3s ease;
     }
@@ -90,7 +92,7 @@
       -webkit-backdrop-filter: blur(18px) saturate(1.4);
       border: 1px solid rgba(255,255,255,0.70);
       border-radius: 100px;
-      padding: 5px;
+      padding: 6px;
       box-shadow:
         0 4px 24px rgba(240, 160, 185, 0.18),
         0 1px 8px rgba(240, 180, 170, 0.12),
@@ -99,9 +101,9 @@
 
     .nav-pills li a {
       display: block;
-      padding: 8px 20px;
+      padding: 9px 22px;
       border-radius: 100px;
-      font-size: 0.83rem;
+      font-size: 0.88rem;
       font-weight: 400;
       color: var(--text-dark);
       text-decoration: none;
@@ -122,7 +124,7 @@
       min-height: 60vh;
       display: flex;
       align-items: center;
-      padding: 100px 100px 90px;
+      padding: 100px 100px 56px;
       position: relative;
     }
 
