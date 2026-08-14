@@ -217,6 +217,23 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav {
+        padding: 12px 20px;
+      }
+      .nav-logo img { height: 32px; }
+      .nav-logo span { font-size: 0.78rem; }
+      .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
+      .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
+      .nav-pills { padding: 3px; }
+    }
+    @media (max-width: 480px) {
+      .nav-pills li a { padding: 5px 8px; font-size: 0.65rem; letter-spacing: 0; }
+      .nav-logo span { display: none; }
+      .nav-logo img { height: 30px; }
+    }
   </style>
 </head>
 <body>
@@ -246,10 +263,9 @@
   <!-- 1: K-Beauty -->
   <a href="kbeauty.html" class="section-card">
     <div class="img-strip">
-        <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/cooltone.png"      alt="Cool Tone" /></div>
-      <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/shoppingcart.png"  alt="Let's Go Shopping" /></div>
+        <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/CapturingGlow.png"  alt="Capturing Glow" /></div>
       <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/glowonthego.png"   alt="Glow on the Go" /></div>
-
+      <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/WhatsinMyBag.png"  alt="What's in My Bag" /></div>
       <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/luckycharms.png"   alt="Lucky Charms" /></div>
     </div>
     <div class="card-footer">
