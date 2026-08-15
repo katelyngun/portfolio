@@ -361,28 +361,23 @@
 
       /* cards smaller + centered */
       .projects { padding: 16px 16px 60px; gap: 14px; }
-      .project-card { flex-direction: column; padding: 18px 16px; gap: 12px; align-items: center; }
-      .card-media { flex: none; height: 180px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: visible; }
-      /* prevent media overflowing into text */
-      .phone-stack { max-height: 170px; margin-bottom: 12px; }
-      .cover-img-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-      .cover-img-wrap img { max-height: 170px; width: auto; object-fit: contain; margin: 0 auto; display: block; }
-      /* matuto card gap */
-      .project-card { gap: 8px; }
-      .card-text { text-align: center; width: 100%; }
+      .project-card { flex-direction: column; padding: 18px 16px; gap: 0; align-items: center; }
+      .card-media { flex: none; height: 140px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: visible; padding-bottom: 16px; }
+      .card-text { text-align: center; width: 100%; padding-top: 8px; }
       .card-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
       .card-subtitle { font-size: 0.85rem; margin-bottom: 14px; }
       .btn-case { display: block; width: fit-content; margin: 0 auto; }
 
-      /* phone stack */
-      .phone-stack { width: 160px; height: 180px; margin: 0 auto; }
-      .phone-mockup { width: 90px; }
-      .phone-mockup.main { width: 100px; }
-      .phone-mockup.left { width: 80px; left: 2px; }
-      .phone-mockup.right { width: 80px; right: 2px; }
+      /* phone stack — height-driven so aspect-ratio phones don't overflow */
+      .phone-stack { position: relative; width: 180px; height: 120px; margin: 0 auto; }
+      .phone-mockup { aspect-ratio: unset; height: 110px; width: auto !important; }
+      .phone-mockup.main  { left: 50%; transform: translateX(-50%); width: 58px !important; height: 116px; }
+      .phone-mockup.left  { left: 4px;  top: 4px; width: 50px !important; height: 100px; transform: rotate(-8deg); opacity: 0.55; }
+      .phone-mockup.right { right: 4px; top: 4px; width: 50px !important; height: 100px; transform: rotate(8deg);  opacity: 0.55; }
 
       /* cover image (matuto) */
-      .cover-img-wrap { width: 200px; height: 150px; }
+      .cover-img-wrap { width: 200px; height: 130px; display: flex; align-items: center; justify-content: center; }
+      .cover-img-wrap img { max-height: 130px; width: auto; object-fit: contain; margin: 0 auto; display: block; }
     }
     @media (max-width: 480px) {
       .nav-logo span { font-size: 0.75rem; }
