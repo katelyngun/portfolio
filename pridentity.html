@@ -389,7 +389,16 @@
       <li><a href="graphicdesigns.html">Graphic Design</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-</nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="uiux.html">UI/UX</a>
+    <a href="motiongraphics.html">Motion Graphics</a>
+    <a href="graphicdesigns.html">Graphic Design</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
 <div class="page">
 
@@ -699,6 +708,30 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
-</script>
+
+    /* ── HAMBURGER MENU ── */
+    (function() {
+      var hb = document.getElementById('hamburger');
+      var mm = document.getElementById('mobileMenu');
+      if (!hb || !mm) return;
+      hb.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hb.classList.toggle('open');
+        mm.classList.toggle('open');
+      });
+      mm.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!hb.contains(e.target) && !mm.contains(e.target)) {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
