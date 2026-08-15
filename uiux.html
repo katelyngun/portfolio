@@ -369,11 +369,12 @@
       .btn-case { display: block; width: fit-content; margin: 0 auto; }
 
       /* phone stack — height-driven so aspect-ratio phones don't overflow */
-      .phone-stack { position: relative; width: 180px; height: 120px; margin: 0 auto; }
-      .phone-mockup { aspect-ratio: unset; height: 110px; width: auto !important; }
-      .phone-mockup.main  { left: 50%; transform: translateX(-50%); width: 58px !important; height: 116px; }
-      .phone-mockup.left  { left: 4px;  top: 4px; width: 50px !important; height: 100px; transform: rotate(-8deg); opacity: 0.55; }
-      .phone-mockup.right { right: 4px; top: 4px; width: 50px !important; height: 100px; transform: rotate(8deg);  opacity: 0.55; }
+      .phone-stack { position: relative; width: 200px; height: 130px; margin: 0 auto; }
+      .phone-mockup { aspect-ratio: unset; overflow: visible; border: none; background: none; box-shadow: none; }
+      .phone-mockup img { border-radius: 0; position: static; width: auto; height: 100%; }
+      .phone-mockup.main  { left: 50%; transform: translateX(-50%); width: 66px !important; height: 130px; }
+      .phone-mockup.left  { left: 4px;  top: 4px; width: 56px !important; height: 114px; transform: rotate(-8deg); opacity: 0.55; }
+      .phone-mockup.right { right: 4px; top: 4px; width: 56px !important; height: 114px; transform: rotate(8deg);  opacity: 0.55; }
 
       /* cover image (matuto) */
       .cover-img-wrap { width: 200px; height: 130px; display: flex; align-items: center; justify-content: center; }
