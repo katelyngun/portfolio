@@ -362,7 +362,13 @@
       /* cards smaller + centered */
       .projects { padding: 16px 16px 60px; gap: 14px; }
       .project-card { flex-direction: column; padding: 18px 16px; gap: 12px; align-items: center; }
-      .card-media { flex: none; height: 180px; width: 100%; display: flex; align-items: center; justify-content: center; }
+      .card-media { flex: none; height: 180px; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+      /* prevent media overflowing into text */
+      .phone-stack { max-height: 170px; overflow: hidden; }
+      .cover-img-wrap { max-height: 160px; width: auto; }
+      .cover-img-wrap img { max-height: 160px; width: auto; object-fit: contain; }
+      /* matuto card gap */
+      .project-card { gap: 20px; }
       .card-text { text-align: center; width: 100%; }
       .card-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
       .card-subtitle { font-size: 0.85rem; margin-bottom: 14px; }
@@ -628,6 +634,30 @@
       });
     }, { threshold: 0.08 });
     document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+  
+    /* ── HAMBURGER MENU ── */
+    (function() {
+      var hb = document.getElementById('hamburger');
+      var mm = document.getElementById('mobileMenu');
+      if (!hb || !mm) return;
+      hb.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hb.classList.toggle('open');
+        mm.classList.toggle('open');
+      });
+      mm.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!hb.contains(e.target) && !mm.contains(e.target)) {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
