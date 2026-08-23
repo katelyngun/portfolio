@@ -371,7 +371,7 @@
       .nav-pills  { display: none; }
       nav { padding: 16px 20px; }
       .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
-      .nav-logo img { height: 36px; width: 36px; object-fit: contain; object-position: center; }
+      .nav-logo img { height: 50px; width: 50px; object-fit: contain; object-position: center; }
       .nav-logo span { font-size: 0.88rem; }
     }
     @media (max-width: 480px) {
@@ -636,6 +636,30 @@
     requestAnimationFrame(draw);
   }
   draw();
-</script>
+
+    /* ── HAMBURGER JS ── */
+    (function() {
+      var hb = document.getElementById('hamburger');
+      var mm = document.getElementById('mobileMenu');
+      if (!hb || !mm) return;
+      hb.addEventListener('click', function(e) {
+        e.stopPropagation();
+        hb.classList.toggle('open');
+        mm.classList.toggle('open');
+      });
+      mm.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        });
+      });
+      document.addEventListener('click', function(e) {
+        if (!hb.contains(e.target) && !mm.contains(e.target)) {
+          hb.classList.remove('open');
+          mm.classList.remove('open');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
