@@ -362,7 +362,7 @@
       background: rgba(255,248,251,0.85);
     }
     @media (max-width: 768px) {
-      .hamburger { display: flex !important; }
+      #hamburger { display: flex !important; }
       .nav-pills  { display: none; }
       nav { padding: 16px 20px; }
       .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
@@ -391,9 +391,11 @@
       <li><a href="graphicdesigns.html">Graphic Design</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <div id="hamburger" aria-label="Menu" onclick="this.classList.toggle('open')" style="display:none;flex-direction:column;justify-content:center;gap:6px;width:38px;height:38px;background:linear-gradient(110deg,rgba(252,210,225,0.55),rgba(255,243,210,0.45));backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.7);border-radius:50%;padding:9px;cursor:pointer;box-sizing:border-box;">
+      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
+      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
+      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
+    </div>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
     <a href="uiux.html">UI/UX</a>
@@ -637,21 +639,32 @@
       var hb = document.getElementById('hamburger');
       var mm = document.getElementById('mobileMenu');
       if (!hb || !mm) return;
+      // remove inline onclick to avoid double-fire
+      hb.removeAttribute('onclick');
       hb.addEventListener('click', function(e) {
         e.stopPropagation();
-        hb.classList.toggle('open');
-        mm.classList.toggle('open');
+        var isOpen = mm.classList.toggle('open');
+        var spans = hb.querySelectorAll('span');
+        if (isOpen) {
+          spans[0].style.transform = 'translateY(8px) rotate(45deg)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+        } else {
+          spans[0].style.transform = '';
+          spans[1].style.opacity = '';
+          spans[2].style.transform = '';
+        }
       });
       mm.querySelectorAll('a').forEach(function(a) {
         a.addEventListener('click', function() {
-          hb.classList.remove('open');
           mm.classList.remove('open');
+          hb.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
         });
       });
       document.addEventListener('click', function(e) {
         if (!hb.contains(e.target) && !mm.contains(e.target)) {
-          hb.classList.remove('open');
           mm.classList.remove('open');
+          hb.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
         }
       });
     })();
