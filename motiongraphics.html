@@ -41,13 +41,20 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 18px 80px;
     }
-            .nav-logo {
+    .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
-      
+      background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255,255,255,0.70);
+      border-radius: 100px;
+      padding: 4px 16px 4px 6px;
+      box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
+                  0 0 0 1px rgba(255,255,255,0.25) inset;
     }
     .nav-logo img {
-      height: 64px; width: 64px;
+      height: 46px; width: 46px;
       object-fit: contain; object-position: center;
       display: block; flex-shrink: 0;
       transition: transform 0.3s ease;
@@ -231,30 +238,6 @@
       font-size: 0.95rem; color: var(--text-mid); font-weight: 300;
       line-height: 1.85; letter-spacing: 0.04em;
     }
-    .overlay-social-row {
-      display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
-    }
-    .btn-social {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 9px 18px; border-radius: 100px;
-      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
-      text-decoration: none; transition: opacity 0.2s, transform 0.2s;
-      border: none; cursor: pointer;
-    }
-    .btn-social:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-social.instagram {
-      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
-      color: #fff;
-    }
-    .btn-social.tiktok {
-      background: #010101; color: #fff;
-    }
-    .btn-social svg { width: 14px; height: 14px; fill: #fff; flex-shrink: 0; }
-    .overlay-music {
-      margin-top: 14px;
-      font-size: 0.72rem; color: rgba(120,90,105,0.45);
-      font-weight: 300; letter-spacing: 0.06em; font-style: italic;
-    }
 
     /* close button */
     .overlay-close {
@@ -286,27 +269,8 @@
       .overlay-body { padding: 18px 20px 22px; }
     }
 
-    /* ── FADE-IN ON SCROLL ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── MOBILE RESPONSIVE ── */
-
-      .nav-logo span { display: none; }
-      .nav-logo img { height: 30px; }
-    }
-
     /* ── HAMBURGER MENU ── */
     .hamburger {
-      -webkit-appearance: none; appearance: none;
-      background-color: initial;
       display: none;
       flex-direction: column;
       justify-content: center;
@@ -320,6 +284,7 @@
       padding: 9px;
       cursor: pointer;
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 0 0 1px rgba(255,255,255,0.25) inset;
+      transition: box-shadow 0.2s;
     }
     .hamburger span {
       display: block; width: 100%; height: 1.5px;
@@ -360,18 +325,18 @@
     }
     .mobile-menu a:hover, .mobile-menu a.active {
       background: rgba(255,248,251,0.85);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
     @media (max-width: 768px) {
-      #hamburger { display: flex !important; }
+      .hamburger { display: flex; }
       .nav-pills  { display: none; }
       nav { padding: 16px 20px; }
       .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
-      .nav-logo img { height: 56px; width: 56px; object-fit: contain; object-position: center; }
+      .nav-logo img { height: 50px; width: 50px; }
       .nav-logo span { font-size: 0.88rem; }
     }
     @media (max-width: 480px) {
       .nav-logo span { font-size: 0.75rem; }
-      .nav-logo img { height: 30px; width: 30px; }
     }
   </style>
 </head>
@@ -382,27 +347,26 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html">
-      <img src="logo.png" alt="Katelyn Gunawan logo" />
-      <span>Katelyn Gunawan</span>
-    </a>
-  <ul class="nav-pills">
-      <li><a href="uiux.html">UI/UX</a></li>
-      <li><a href="motiongraphics.html" class="active">Motion Graphics</a></li>
-      <li><a href="graphicdesigns.html">Graphic Design</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div id="hamburger" aria-label="Menu" onclick="this.classList.toggle('open')" style="display:none;flex-direction:column;justify-content:center;gap:6px;width:38px;height:38px;background:linear-gradient(110deg,rgba(252,210,225,0.55),rgba(255,243,210,0.45));backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.7);border-radius:50%;padding:9px;cursor:pointer;box-sizing:border-box;">
-      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
-      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
-      <span style="display:block;width:100%;height:2px;background:#2c2c2c;border-radius:2px;transition:transform 0.3s ease,opacity 0.3s ease;"></span>
-    </div>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="uiux.html">UI/UX</a>
-    <a href="motiongraphics.html" class="active">Motion Graphics</a>
-    <a href="graphicdesigns.html">Graphic Design</a>
-    <a href="contact.html">Contact</a>
-  </div>
+    <img src="logo.png" alt="Katelyn Gunawan logo" />
+    <span>Katelyn Gunawan</span>
+  </a>
+  <ul class="nav-pills" id="navPills">
+    <li><a href="uiux.html">UI/UX</a></li>
+    <li><a href="motiongraphics.html" class="active">Motion Graphics</a></li>
+    <li><a href="#">Graphic Design</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <!-- hamburger — mobile only -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="uiux.html">UI/UX</a>
+  <a href="motiongraphics.html" class="active">Motion Graphics</a>
+  <a href="graphicdesigns.html">Graphic Design</a>
+  <a href="contact.html">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -414,13 +378,7 @@
   <div class="video-grid">
 
     <!-- 1: MLP -->
-    <div class="video-card" id="mlp-card" onclick="openOverlay(
-      'https://res.cloudinary.com/mlgdapwx/video/upload/v1786655411/mlpsaturated.mp4',
-      'My Little Metro Editorial',
-      'A motion graphics piece created for the editorial photoshoot My Little Metro, reimagining the world of My Little Pony through the lens of the 2000s Fruitiger Metro aesthetic. Drawing inspiration from nostalgic kids channel openings and old iPod advertisements, I played with rotoscoping and dynamic 3D camera movements to bring the shoot to life.',
-      'mlp',
-      'Music: Girl like Me by PinkPantheress'
-    )">
+    <div class="video-card" onclick="openOverlay('https://res.cloudinary.com/mlgdapwx/video/upload/v1786655411/mlpsaturated.mp4', 'My Little Metro Editorial', 'A motion graphics piece created for the editorial photoshoot My Little Metro, reimagining the world of My Little Pony through the lens of the 2000s Fruitiger Metro aesthetic. Drawing inspiration from nostalgic kids channel openings and old iPod advertisements, I played with rotoscoping and dynamic 3D camera movements to bring the shoot to life. Music: Girl like Me by Pink Pantheress')">
       <div class="card-thumb">
         <video src="https://res.cloudinary.com/mlgdapwx/video/upload/v1786655411/mlpsaturated.mp4" autoplay loop muted playsinline></video>
         <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
@@ -431,16 +389,16 @@
     <!-- 2: Storybook -->
     <div class="video-card" onclick="openOverlay('https://res.cloudinary.com/mlgdapwx/video/upload/v1786655477/STORYBOOKLORELAI.mov', 'The Last Unicorn Editorial', 'An animated visual narrative created for an editorial photoshoot I co-creative directed, centered the tale of The Last Unicorn. Inspired by the magic of childhood pop-up books, I layered photographs from the shoot with the film backdrops and atmospheric graphics to create a whimsical, three-dimensional, and nostalgic journey through the fantasy world while bringing my shoot to life.')">
       <div class="card-thumb">
-        <video src="https://res.cloudinary.com/mlgdapwx/video/upload/v1786655477/STORYBOOKLORELAI.mov" autoplay loop muted playsinline style="object-fit:cover; transform:scale(1.35); transform-origin:center;"></video>
+        <video src="https://res.cloudinary.com/mlgdapwx/video/upload/v1786655477/STORYBOOKLORELAI.mov" autoplay loop muted playsinline></video>
         <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
       </div>
       <div class="card-footer"><p class="card-title">The Last Unicorn Editorial</p><span class="card-hint">read more ↗</span></div>
     </div>
 
     <!-- 3: Princess and the Pea -->
-    <div class="video-card" onclick="openOverlay('https://res.cloudinary.com/mlgdapwx/video/upload/v1786655415/princessandpea.mp4', 'Princess and the Pea Editorial', 'A music video-style motion graphics piece created for an editorial photoshoot I co-creative directed and styled, reimagining the fairytale of The Princess and the Pea through a playful pop lens. Blending mixed media elements, vibrant color palettes, and energetic motion, I expressed the aesthetic vision of my editorial.', null, 'Music: Good Girls by Charli xcx')">
+    <div class="video-card" onclick="openOverlay('motiongraphics/princessandpea.mp4', 'Princess and the Pea Editorial', 'A music video-style motion graphics piece created for an editorial photoshoot I co-creative directed and styled, reimagining the fariytale of The Princess and the Pea through a playful pop lens. Blending mixed media elements, vibrant color palettes, and energetic motion, I expressed the aesthetic vision of my editorial. Music: Good Girls by Charli xcx.')">
       <div class="card-thumb">
-        <video src="https://res.cloudinary.com/mlgdapwx/video/upload/v1786655415/princessandpea.mp4" autoplay loop muted playsinline></video>
+        <video src="motiongraphics/princessandpea.mp4" autoplay loop muted playsinline></video>
         <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div>
       </div>
       <div class="card-footer"><p class="card-title">Princess and the Pea Editorial</p><span class="card-hint">read more ↗</span></div>
@@ -500,8 +458,6 @@
     <div class="overlay-body">
       <h2 class="overlay-title" id="overlay-title"></h2>
       <p class="overlay-desc" id="overlay-desc"></p>
-      <div class="overlay-social-row" id="overlay-social"></div>
-      <p class="overlay-music" id="overlay-music"></p>
     </div>
   </div>
 </div>
@@ -522,24 +478,11 @@
 </footer>
 
 <script>
-  const SOCIAL_HTML = {
-    mlp: `<a class="btn-social instagram" href="https://www.instagram.com/reel/DZLBj2AgYM8/" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-      View on Instagram
-    </a>
-    <a class="btn-social tiktok" href="https://www.tiktok.com/t/ZTSd3EqAC/" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
-      View on TikTok
-    </a>`
-  };
-
-  function openOverlay(src, title, desc, socialKey, music) {
+  function openOverlay(src, title, desc) {
     const overlay = document.getElementById('overlay');
     const vid = document.getElementById('overlay-video');
     document.getElementById('overlay-title').textContent = title;
     document.getElementById('overlay-desc').textContent = desc;
-    document.getElementById('overlay-social').innerHTML = socialKey ? (SOCIAL_HTML[socialKey] || '') : '';
-    document.getElementById('overlay-music').textContent = music || '';
     vid.src = src;
     vid.load();
     vid.play();
@@ -575,7 +518,7 @@
       const cols = [[250,210,220],[252,220,210],[248,205,218],[252,225,215]];
       return cols[Math.floor(Math.random()*cols.length)];
     } else {
-      const cols = [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]];
+      const cols = [[210,235,205],[195,228,195],[248,210,222],[215,238,210],[245,205,220]];
       return cols[Math.floor(Math.random()*cols.length)];
     }
   }
@@ -634,40 +577,25 @@
   }
   draw();
 
-    /* ── HAMBURGER JS ── */
-    (function() {
-      var hb = document.getElementById('hamburger');
-      var mm = document.getElementById('mobileMenu');
-      if (!hb || !mm) return;
-      // remove inline onclick to avoid double-fire
-      hb.removeAttribute('onclick');
-      hb.addEventListener('click', function(e) {
-        e.stopPropagation();
-        var isOpen = mm.classList.toggle('open');
-        var spans = hb.querySelectorAll('span');
-        if (isOpen) {
-          spans[0].style.transform = 'translateY(8px) rotate(45deg)';
-          spans[1].style.opacity = '0';
-          spans[2].style.transform = 'translateY(-8px) rotate(-45deg)';
-        } else {
-          spans[0].style.transform = '';
-          spans[1].style.opacity = '';
-          spans[2].style.transform = '';
-        }
+    /* ── HAMBURGER MENU ── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
       });
-      mm.querySelectorAll('a').forEach(function(a) {
-        a.addEventListener('click', function() {
-          mm.classList.remove('open');
-          hb.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
-        });
-      });
-      document.addEventListener('click', function(e) {
-        if (!hb.contains(e.target) && !mm.contains(e.target)) {
-          mm.classList.remove('open');
-          hb.querySelectorAll('span').forEach(function(s){s.style.transform='';s.style.opacity='';});
-        }
-      });
-    })();
-  </script>
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      }
+    });
+</script>
 </body>
 </html>
