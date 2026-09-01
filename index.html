@@ -56,7 +56,7 @@
       padding: 18px 80px;
     }
 
-    .nav-logo {
+        .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -69,19 +69,11 @@
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
     .nav-logo img {
-      height: 46px; width: 46px;
+      height: 46px !important; width: 46px !important;
       object-fit: contain; object-position: center;
       display: block; flex-shrink: 0;
       transition: transform 0.3s ease;
     }
-    .nav-logo span {
-      font-family: 'Urbanist', sans-serif;
-      font-size: 1.05rem; font-weight: 400;
-      color: var(--text-dark); letter-spacing: 0.04em;
-      transition: color 0.3s ease;
-    }
-    .nav-logo:hover img   { transform: scale(1.15); }
-    .nav-logo:hover span  { color: #7a9e6e; }
 
     .nav-pills {
       display: flex;
@@ -362,7 +354,6 @@
     }
 
     @media (max-width: 900px) {
-      nav { padding: 14px 28px; }
       .nav-pills li a { padding: 7px 13px; font-size: 0.75rem; }
       .hero { flex-direction: column; padding: 90px 40px 40px; gap: 32px; }
       .hero-name { white-space: normal; }
@@ -436,14 +427,14 @@
     @media (max-width: 768px) {
       .hamburger { display: flex; }
       .nav-pills  { display: none; }
+      nav { padding: 16px 20px; }
+      nav .nav-logo { padding: 5px !important; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
+      nav .nav-logo span { display: none !important; }
     }
 
     @media (max-width: 768px) {
       /* nav */
-      nav { padding: 16px 20px; }
-      .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
-      .nav-logo img { height: 36px; width: 36px; object-fit: contain; object-position: center; }
-      .nav-logo span { font-size: 0.88rem; }
 
       /* hero */
       .hero { flex-direction: column-reverse; align-items: center; text-align: center; padding: 80px 24px 24px; gap: 16px; min-height: unset; }
@@ -486,9 +477,9 @@
       .project-card:hover .gd-img.right { left: 124px; transform: translateY(-50%) rotate(10deg); opacity: 0.6; }
     }
 
+    
     @media (max-width: 480px) {
-      .nav-logo span { font-size: 0.75rem; }
-      .nav-logo img { height: 30px; width: 30px; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
     }
   </style>
 </head>
