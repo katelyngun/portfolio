@@ -36,7 +36,7 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 18px 80px;
     }
-            .nav-logo {
+        .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -48,18 +48,6 @@
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
-    .nav-logo img {
-      height: 46px; object-fit: contain; display: block;
-      transition: transform 0.3s ease;
-    }
-    .nav-logo span {
-      font-family: 'Urbanist', sans-serif;
-      font-size: 1.05rem; font-weight: 400;
-      color: var(--text-dark); letter-spacing: 0.04em;
-      transition: color 0.3s ease;
-    }
-    .nav-logo:hover img   { transform: scale(1.15); }
-    .nav-logo:hover span  { color: #7a9e6e; }
     .nav-pills {
       display: flex; list-style: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -207,23 +195,6 @@
       .strip-img-wrap:nth-child(3) { margin-right: -14px; }
     }
 
-    /* ── FADE-IN ON SCROLL ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── MOBILE RESPONSIVE ── */
-
-      .nav-logo span { display: none; }
-      .nav-logo img { height: 30px; }
-    }
-
     /* ── HAMBURGER MENU ── */
     .hamburger {
       display: none;
@@ -239,6 +210,7 @@
       padding: 9px;
       cursor: pointer;
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 0 0 1px rgba(255,255,255,0.25) inset;
+      transition: box-shadow 0.2s;
     }
     .hamburger span {
       display: block; width: 100%; height: 1.5px;
@@ -284,13 +256,12 @@
       .hamburger { display: flex; }
       .nav-pills  { display: none; }
       nav { padding: 16px 20px; }
-      .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
-      .nav-logo img { height: 36px; width: 36px; object-fit: contain; object-position: center; }
-      .nav-logo span { font-size: 0.88rem; }
+      nav .nav-logo { padding: 5px !important; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
+      nav .nav-logo span { display: none !important; }
     }
     @media (max-width: 480px) {
-      .nav-logo span { font-size: 0.75rem; }
-      .nav-logo img { height: 30px; width: 30px; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
     }
   </style>
 </head>
@@ -299,25 +270,26 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-      <img src="logo.png" alt="Katelyn Gunawan logo" />
-      <span>Katelyn Gunawan</span>
-    </a>
-  <ul class="nav-pills">
+    <img src="logo.png" alt="Katelyn Gunawan logo" />
+    <span>Katelyn Gunawan</span>
+  </a>
+  <ul class="nav-pills" id="navPills">
       <li><a href="uiux.html">UI/UX</a></li>
       <li><a href="motiongraphics.html">Motion Graphics</a></li>
       <li><a href="graphicdesigns.html" class="active">Graphic Design</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="uiux.html">UI/UX</a>
-    <a href="motiongraphics.html">Motion Graphics</a>
-    <a href="graphicdesigns.html" class="active">Graphic Design</a>
-    <a href="contact.html">Contact</a>
-  </div>
+      <!-- hamburger — mobile only -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="uiux.html">UI/UX</a>
+  <a href="motiongraphics.html">Motion Graphics</a>
+  <a href="graphicdesigns.html" class="active">Graphic Design</a>
+  <a href="contact.html">Contact</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -330,9 +302,10 @@
   <!-- 1: K-Beauty -->
   <a href="kbeauty.html" class="section-card">
     <div class="img-strip">
-        <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/CapturingGlow.png"  alt="Capturing Glow" /></div>
+        <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/cooltone.png"      alt="Cool Tone" /></div>
+      <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/shoppingcart.png"  alt="Let's Go Shopping" /></div>
       <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/glowonthego.png"   alt="Glow on the Go" /></div>
-      <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/WhatsinMyBag.png"  alt="What's in My Bag" /></div>
+
       <div class="strip-img-wrap"><img src="graphicdesigns/kbeauty/luckycharms.png"   alt="Lucky Charms" /></div>
     </div>
     <div class="card-footer">
@@ -400,7 +373,7 @@ const bubbles = [];
 function bubbleColor(n) {
   return n < 0.45
     ? [[250,210,220],[252,220,210],[248,205,218],[252,225,215]][Math.floor(Math.random()*4)]
-    : [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]][Math.floor(Math.random()*5)];
+    : [[210,235,205],[195,228,195],[248,210,222],[215,238,210],[245,205,220]][Math.floor(Math.random()*5)];
 }
 for (let i = 0; i < 38; i++) {
   const y = Math.random(); const [r,g,b] = bubbleColor(y);
@@ -453,6 +426,25 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
-</script>
+    /* ── HAMBURGER MENU ── */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      }
+    });
+  </script>
 </body>
 </html>
