@@ -50,7 +50,7 @@
       padding: 18px 80px;
     }
 
-            .nav-logo {
+                .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -63,7 +63,9 @@
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
     .nav-logo img {
-      height: 46px; object-fit: contain; display: block;
+      height: 46px; width: 46px;
+      object-fit: contain; object-position: center;
+      display: block; flex-shrink: 0;
       transition: transform 0.3s ease;
     }
     .nav-logo span {
@@ -72,8 +74,8 @@
       color: var(--text-dark); letter-spacing: 0.04em;
       transition: color 0.3s ease;
     }
-    .nav-logo:hover img   { transform: scale(1.15); }
-    .nav-logo:hover span  { color: #7a9e6e; }
+    .nav-logo:hover img { transform: scale(1.15); }
+    .nav-logo:hover span { color: #7a9e6e; }
 
     .nav-pills {
       display: flex;
@@ -351,6 +353,8 @@
     }
     @media (max-width: 768px) {
       nav { padding: 16px 20px; }
+      .hero { text-align: center; }
+      .hero-title { font-size: clamp(2.2rem, 4vw, 3.2rem); text-align: center; }
       .nav-logo { padding: 5px 14px 5px 5px; gap: 7px; }
       .nav-logo img { height: 36px; width: 36px; object-fit: contain; object-position: center; }
       .nav-logo span { display: none; }
