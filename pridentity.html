@@ -38,7 +38,7 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 18px 80px;
     }
-            .nav-logo {
+        .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -50,18 +50,6 @@
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 1px 8px rgba(240,180,170,0.12),
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
-    .nav-logo img {
-      height: 46px; object-fit: contain; display: block;
-      transition: transform 0.3s ease;
-    }
-    .nav-logo span {
-      font-family: 'Urbanist', sans-serif;
-      font-size: 1.05rem; font-weight: 400;
-      color: var(--text-dark); letter-spacing: 0.04em;
-      transition: color 0.3s ease;
-    }
-    .nav-logo:hover img   { transform: scale(1.15); }
-    .nav-logo:hover span  { color: #7a9e6e; }
     .nav-pills {
       display: flex; list-style: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -239,23 +227,24 @@
 
     /* ── CTAs ── */
     .cta-wrap { display: flex; justify-content: center; gap: 20px; margin-top: 60px; flex-wrap: wrap; }
-        .btn-cta {
+    .btn-cta {
       display: inline-block; padding: 14px 36px;
-      border-radius: 100px; border: 1.5px solid #b0c060;
-      background: rgba(176,192,80,0.12); color: #5e6e2a;
-      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
-      text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
-      box-shadow: none;
+      background: var(--green-btn); color: #fff;
+      border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.04em; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(122,158,110,0.3);
     }
-    .btn-cta:hover { background: #c8d98a; color: #4a5820; border-color: #c8d98a; transform: translateY(-2px); }
+    .btn-cta:hover { background: #6a8e5e; transform: translateY(-2px); }
     .btn-outline {
       display: inline-block; padding: 14px 36px;
-      border-radius: 100px; border: 1.5px solid #b0c060;
-      background: rgba(176,192,80,0.12); color: #5e6e2a;
-      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em;
-      text-decoration: none; transition: background 0.2s, color 0.2s, border-color 0.2s;
+      border: 2px solid var(--green-btn); color: var(--green-btn);
+      border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.04em; text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      background: transparent;
     }
-    .btn-outline:hover { background: #c8d98a; color: #4a5820; border-color: #c8d98a; }
+    .btn-outline:hover { background: var(--green-btn); color: #fff; }
 
     footer {
       text-align: center; padding: 40px;
@@ -267,34 +256,6 @@
       nav { padding: 14px 20px; }
       .hero { flex-direction: column; padding-top: 90px; }
       .ps-grid, .phone-row-3, .lifestyle-row { grid-template-columns: 1fr; }
-    }
-
-    /* ── FADE-IN ON SCROLL ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav {
-        padding: 12px 20px;
-      }
-      .nav-logo img { height: 32px; }
-      .nav-logo span { font-size: 0.78rem; }
-      .nav-logo { padding: 3px 10px 3px 4px; gap: 6px; }
-      .nav-pills li a { padding: 6px 10px; font-size: 0.7rem; }
-      .nav-pills { padding: 3px; }
-    }
-    @media (max-width: 480px) {
-      .nav-pills li a { padding: 5px 8px; font-size: 0.65rem; letter-spacing: 0; }
-      .nav-logo span { display: none; }
-      .nav-logo img { height: 30px; }
     }
 
     /* ── HAMBURGER MENU ── */
@@ -312,6 +273,7 @@
       padding: 9px;
       cursor: pointer;
       box-shadow: 0 4px 24px rgba(240,160,185,0.18), 0 0 0 1px rgba(255,255,255,0.25) inset;
+      transition: box-shadow 0.2s;
     }
     .hamburger span {
       display: block; width: 100%; height: 1.5px;
@@ -352,26 +314,22 @@
     }
     .mobile-menu a:hover, .mobile-menu a.active {
       background: rgba(255,248,251,0.85);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     }
     @media (max-width: 768px) {
       .hamburger { display: flex; }
       .nav-pills  { display: none; }
-    }
-
-    @media (max-width: 768px) {
       nav { padding: 16px 20px; }
-      .nav-logo img { height: 36px; width: 36px; object-fit: contain; object-position: center; }
-      .nav-logo span { font-size: 0.88rem; }
-      .phone-row-3 {
-        max-width: 100%;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-      }
-      .phone-card { padding: 5px; border-radius: 10px; }
-      .phone-card img, .phone-card video { border-radius: 6px; }
-      .hifi-group { margin-top: 50px; }
-      .hifi-group + .hifi-group { margin-top: 50px; }
+      nav .nav-logo { padding: 5px !important; }
+      nav     .nav-logo img {
+      height: 46px; width: 46px;
+      object-fit: contain; object-position: center;
+      display: block; flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+      nav .nav-logo span { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
     }
   </style>
 </head>
@@ -380,25 +338,26 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-      <img src="logo.png" alt="Katelyn Gunawan logo" />
-      <span>Katelyn Gunawan</span>
-    </a>
-  <ul class="nav-pills">
+    <img src="logo.png" alt="Katelyn Gunawan logo" />
+    <span>Katelyn Gunawan</span>
+  </a>
+  <ul class="nav-pills" id="navPills">
       <li><a href="uiux.html" class="active">UI/UX</a></li>
       <li><a href="motiongraphics.html">Motion Graphics</a></li>
       <li><a href="graphicdesigns.html">Graphic Design</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="uiux.html">UI/UX</a>
-    <a href="motiongraphics.html">Motion Graphics</a>
-    <a href="graphicdesigns.html">Graphic Design</a>
-    <a href="contact.html">Contact</a>
-  </div>
+      <!-- hamburger — mobile only -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="uiux.html" class="active">UI/UX</a>
+  <a href="motiongraphics.html">Motion Graphics</a>
+  <a href="graphicdesigns.html">Graphic Design</a>
+  <a href="contact.html">Contact</a>
+</div>
 
 <div class="page">
 
@@ -421,17 +380,19 @@
   <!-- OVERVIEW -->
   <section>
     <p class="section-label">Overview</p>
-    <p class="body-text">Pridentity is a mobile platform designed to spotlight queer media and create a welcoming space for LGBTQ+ users to explore and express their queer identities. Rather than searching across scattered platforms for meaningful representation and safe spaces, one can find queer media and community in one inclusive digital space.</p>
+    <p class="body-text">
+      Pridentity is a mobile platform designed to uplift queer voices: music, novels, podcasts, and programs that let queer people access the stories that speak to their own lives. Rather than searching scattered platforms, Pridentity is a curated destination where discovering, reviewing, and sharing queer content feels natural and joyful.
+    </p>
 
     <!-- Problem / Solution -->
     <div class="ps-grid">
       <div class="ps-card">
         <p class="ps-label">Problem</p>
-        <p class="ps-text">There exists no dedicated platform to find queer representation in media, which is often limited and stereotyped.</p>
+        <p class="ps-text">Queer audiences struggle to find LGBTQ+ representation in mainstream media platforms. Content is scattered across services with no dedicated discovery experience.</p>
       </div>
       <div class="ps-card">
         <p class="ps-label">Solution</p>
-        <p class="ps-text">Pridentity curates diverse queer media across diverse identities, increasing visibility while fostering community.</p>
+        <p class="ps-text">A curated mobile platform dedicated to queer media that surfaces LGBTQ+ content across formats in one cohesive, community-driven experience.</p>
       </div>
     </div>
   </section>
@@ -441,7 +402,9 @@
   <!-- USER RESEARCH -->
   <section>
     <p class="section-label">User Research</p>
-    <p class="body-text">Through interviews and surveys with queer people, I identified key needs: Feeling seen in media, finding community and belonging, and wanting non-stereotypical representation. This informed my goal to showcase diverse queer identities and empower users to proudly express their own.</p>
+    <p class="body-text">
+      Through one-on-one interviews with queer media consumers, I identified key pain points: difficulty discovering genre-specific content, lack of a trusted rating system driven by people who share their identity, and no way to signal media interests through profile labels. Research also surfaced a strong desire for social features — messaging and shared watchlists.
+    </p>
   </section>
 
   <div class="divider"></div>
@@ -449,7 +412,7 @@
   <!-- LOW-FIDELITY -->
   <section>
     <p class="section-label">Low-Fidelity</p>
-    <p class="body-text">I defined core features to tackle queer needs and created intuitive layouts inspired by familiar media platforms like Letterboxd, Goodreads, and Netflix.</p>
+    <p class="body-text">Information architecture and quick paper sketches to test screen flows and navigation structures before committing to visual design.</p>
     <div class="glass-card full-img-card">
       <img src="pridentity/pridentitylofi.png" alt="Low-fidelity wireframes and IA" />
     </div>
@@ -460,7 +423,7 @@
   <!-- MID-FIDELITY -->
   <section>
     <p class="section-label">Mid-Fidelity</p>
-    <p class="body-text">I developed a modern visual style tailored to Gen Z, using a minimal UI to keep focus on the media while establishing a strong queer branding.</p>
+    <p class="body-text">Established layout patterns across core screens while locking in the Pridentity logo mark and colour direction — a deep purple and rainbow accent palette signalling identity and pride.</p>
     <div class="glass-card midfi-wrap">
       <img src="pridentity/pridentitymidfi.png" alt="Mid-fidelity screens" />
     </div>
@@ -471,7 +434,7 @@
   <!-- HI-FIDELITY -->
   <section>
     <p class="section-label">Hi-Fidelity</p>
-    <p class="body-text">With my core user flows, I focused on a highly interactive and community-driven experience. I put research into curating sample content to show how my app would highlight diverse, underrepresented queer identities.</p>
+    <p class="body-text">With the visual language firmly set, I refined every screen to highlight queer media discovery and community features. Each group below focuses on a distinct user goal.</p>
 
     <!-- Group 1: Browse queer media — hifi1, hifivid1, hifi2 -->
     <div class="hifi-group">
@@ -599,7 +562,9 @@
   <!-- USABILITY TESTING -->
   <section>
     <p class="section-label">Usability Testing</p>
-    <p class="body-text">I asked users to test my prototype and found that they were able to successfully complete tasks and navigate with ease. Feedback primarily focused on visual hierarchy, such as adjusting text size or weight.</p>
+    <p class="body-text">
+      Conducted moderated usability sessions with participants who identified within the LGBTQ+ community. Key findings informed refinements to the navigation hierarchy and the profile label selection flow.
+    </p>
   </section>
 
   <div class="divider"></div>
@@ -607,7 +572,9 @@
   <!-- MOVING FORWARD -->
   <section>
     <p class="section-label">Moving Forward</p>
-    <p class="body-text">I plan to refine visual hierarchy based on usability feedback and strengthen brand identity. Pridentity is a meaningful project for me, and I hope to expand it into a fully realized platform for queer users in the future.</p>
+    <p class="body-text">
+      Next I plan to expand Pridentity into a complete user journey, building further social and community discovery features. The project has deepened my conviction in designing spaces where underrepresented communities can feel genuinely seen.
+    </p>
   </section>
 
   <!-- CTAs -->
@@ -650,7 +617,7 @@ function bubbleColor(normY) {
     const cols = [[250,210,220],[252,220,210],[248,205,218],[252,225,215]];
     return cols[Math.floor(Math.random()*cols.length)];
   } else {
-    const cols = [[220,235,180],[228,235,175],[235,230,185],[225,232,178],[232,235,182]];
+    const cols = [[210,235,205],[195,228,195],[248,210,222],[215,238,210],[245,205,220]];
     return cols[Math.floor(Math.random()*cols.length)];
   }
 }
@@ -708,30 +675,25 @@ function draw() {
   requestAnimationFrame(draw);
 }
 draw();
-
     /* ── HAMBURGER MENU ── */
-    (function() {
-      var hb = document.getElementById('hamburger');
-      var mm = document.getElementById('mobileMenu');
-      if (!hb || !mm) return;
-      hb.addEventListener('click', function(e) {
-        e.stopPropagation();
-        hb.classList.toggle('open');
-        mm.classList.toggle('open');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
       });
-      mm.querySelectorAll('a').forEach(function(a) {
-        a.addEventListener('click', function() {
-          hb.classList.remove('open');
-          mm.classList.remove('open');
-        });
-      });
-      document.addEventListener('click', function(e) {
-        if (!hb.contains(e.target) && !mm.contains(e.target)) {
-          hb.classList.remove('open');
-          mm.classList.remove('open');
-        }
-      });
-    })();
+    });
+    document.addEventListener('click', e => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      }
+    });
   </script>
 </body>
 </html>
