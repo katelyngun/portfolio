@@ -50,7 +50,7 @@
       padding: 18px 80px;
     }
 
-                .nav-logo {
+    .nav-logo {
       display: flex; align-items: center; gap: 10px;
       text-decoration: none;
       background: linear-gradient(110deg, rgba(252,210,225,0.55) 0%, rgba(255,243,210,0.45) 100%);
@@ -63,7 +63,7 @@
                   0 0 0 1px rgba(255,255,255,0.25) inset;
     }
     .nav-logo img {
-      height: 46px; width: 46px;
+      height: 46px !important; width: 46px !important;
       object-fit: contain; object-position: center;
       display: block; flex-shrink: 0;
       transition: transform 0.3s ease;
@@ -355,9 +355,9 @@
       nav { padding: 16px 20px; }
       .hero { text-align: center; }
       .hero-title { font-size: clamp(2.2rem, 4vw, 3.2rem); text-align: center; }
-      .nav-logo { padding: 5px; }
-      .nav-logo img { height: 38px !important; width: 38px !important; }
-      .nav-logo span { display: none; }
+      nav .nav-logo { padding: 5px !important; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
+      nav .nav-logo span { display: none !important; }
 
       /* hero title padding */
       .hero { padding: 80px 24px 20px; }
@@ -385,8 +385,8 @@
       .cover-img-wrap img { max-height: 130px; width: auto; object-fit: contain; margin: 0 auto; display: block; }
     }
     @media (max-width: 480px) {
-      .nav-logo span { display: none; }
-      .nav-logo img { height: 38px !important; width: 38px !important; }
+      nav .nav-logo span { display: none !important; }
+      nav .nav-logo img { height: 38px !important; width: 38px !important; }
     }
   </style>
 </head>
