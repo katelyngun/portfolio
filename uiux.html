@@ -292,8 +292,6 @@
       position: relative;
     }
 
-    /* Matuto + Coming Soon image wrapper */
-
     .cover-img-wrap {
       width: 100%;
       height: 100%;
@@ -317,6 +315,7 @@
     }
 
     /* Coming Soon project images */
+
     .coming-soon-card .cover-img-wrap {
       overflow: hidden;
       border-radius: 18px;
@@ -327,7 +326,6 @@
       height: 100%;
 
       object-fit: cover;
-      object-position: center;
 
       border-radius: 18px;
 
@@ -338,11 +336,21 @@
         opacity 0.3s ease;
     }
 
+    /* K-BEAUTY — shift crop to the RIGHT */
+
+    .kbeauty-card .cover-img-wrap img {
+      object-position: right center;
+    }
+
+    /* FADS — shift crop to the TOP */
+
+    .fads-card .cover-img-wrap img {
+      object-position: center top;
+    }
+
     .coming-soon-card:hover .cover-img-wrap img {
       transform: scale(1.04);
     }
-
-    /* All card media scales slightly on hover */
 
     .project-card:hover .phone-stack,
     .project-card:hover .cover-img-wrap {
@@ -748,11 +756,6 @@
         margin-bottom: 16px;
       }
 
-      /*
-        Keep the Coming Soon covers proportional
-        while still filling the media area.
-      */
-
       .coming-soon-card .card-media {
         width: 100%;
       }
@@ -767,6 +770,15 @@
         height: 100%;
 
         object-fit: cover;
+      }
+
+      /* Keep crop positions on tablet */
+      .kbeauty-card .cover-img-wrap img {
+        object-position: right center;
+      }
+
+      .fads-card .cover-img-wrap img {
+        object-position: center top;
       }
     }
 
@@ -992,9 +1004,7 @@
       }
 
       /*
-        Coming Soon images on mobile.
-        These use the full available width
-        instead of the Matuto image behavior.
+        Coming Soon images on mobile
       */
 
       .coming-soon-card .card-media {
@@ -1026,6 +1036,16 @@
 
         border-radius: 14px;
       }
+
+      /* Keep desired crop positions on mobile */
+
+      .kbeauty-card .cover-img-wrap img {
+        object-position: right center;
+      }
+
+      .fads-card .cover-img-wrap img {
+        object-position: center top;
+      }
     }
 
     /* ─────────────────────────
@@ -1050,6 +1070,14 @@
       .coming-soon-card .cover-img-wrap {
         height: 115px;
       }
+
+      .kbeauty-card .cover-img-wrap img {
+        object-position: right center;
+      }
+
+      .fads-card .cover-img-wrap img {
+        object-position: center top;
+      }
     }
   </style>
 </head>
@@ -1058,9 +1086,7 @@
 
   <canvas id="bg-canvas"></canvas>
 
-  <!-- ─────────────────────────
-       NAV
-  ───────────────────────── -->
+  <!-- NAV -->
 
   <nav>
 
@@ -1118,6 +1144,7 @@
 
   </nav>
 
+
   <!-- MOBILE MENU -->
 
   <div
@@ -1147,9 +1174,7 @@
   </div>
 
 
-  <!-- ─────────────────────────
-       HERO
-  ───────────────────────── -->
+  <!-- HERO -->
 
   <section class="hero">
 
@@ -1160,9 +1185,7 @@
   </section>
 
 
-  <!-- ─────────────────────────
-       PROJECT CARDS
-  ───────────────────────── -->
+  <!-- PROJECTS -->
 
   <div class="projects">
 
@@ -1328,14 +1351,11 @@
     </a>
 
 
-    <!-- ─────────────────────────
-         K-BEAUTY MAKEUP
-         COMING SOON
-    ───────────────────────── -->
+    <!-- K-BEAUTY MAKEUP -->
 
     <a
       href="kbeautymakeup.html"
-      class="project-card coming-soon-card"
+      class="project-card coming-soon-card kbeauty-card"
     >
 
       <div class="card-media">
@@ -1370,14 +1390,11 @@
     </a>
 
 
-    <!-- ─────────────────────────
-         FADS WEBSITE
-         COMING SOON
-    ───────────────────────── -->
+    <!-- FADS WEBSITE -->
 
     <a
       href="fads.html"
-      class="project-card coming-soon-card"
+      class="project-card coming-soon-card fads-card"
     >
 
       <div class="card-media">
@@ -1411,13 +1428,10 @@
 
     </a>
 
-
   </div>
 
 
-  <!-- ─────────────────────────
-       FOOTER
-  ───────────────────────── -->
+  <!-- FOOTER -->
 
   <footer>
 
@@ -1573,15 +1587,11 @@
   </footer>
 
 
-  <!-- ─────────────────────────
-       JAVASCRIPT
-  ───────────────────────── -->
+  <!-- JAVASCRIPT -->
 
   <script>
 
-    /* ─────────────────────────
-       BACKGROUND CANVAS
-    ───────────────────────── */
+    /* BACKGROUND CANVAS */
 
     const canvas =
       document.getElementById("bg-canvas");
@@ -1656,9 +1666,7 @@
     );
 
 
-    /* ─────────────────────────
-       BUBBLES
-    ───────────────────────── */
+    /* BUBBLES */
 
     const bubbles = [];
 
@@ -1672,11 +1680,8 @@
         const cols = [
 
           [250, 210, 220],
-
           [252, 220, 210],
-
           [248, 205, 218],
-
           [252, 225, 215]
 
         ];
@@ -1693,13 +1698,9 @@
         const cols = [
 
           [220, 235, 180],
-
           [228, 235, 175],
-
           [235, 230, 185],
-
           [225, 232, 178],
-
           [232, 235, 182]
 
         ];
@@ -1783,9 +1784,7 @@
     }
 
 
-    /* ─────────────────────────
-       WAVE
-    ───────────────────────── */
+    /* WAVE */
 
     const wave = {
 
@@ -1805,9 +1804,7 @@
     let t = 0;
 
 
-    /* ─────────────────────────
-       DRAW
-    ───────────────────────── */
+    /* DRAW */
 
     function draw() {
 
@@ -1820,8 +1817,6 @@
         H
       );
 
-
-      /* Background gradient */
 
       const grad =
         ctx.createLinearGradient(
@@ -1857,8 +1852,6 @@
         H
       );
 
-
-      /* Bubbles */
 
       bubbles.forEach((b) => {
 
@@ -1903,8 +1896,6 @@
           b.x = -0.1;
         }
 
-
-        /* Mouse interaction */
 
         const ddx =
           screenX -
@@ -1956,8 +1947,6 @@
           screenY +
           b.vy * 8;
 
-
-        /* Bubble gradient */
 
         const bubbleGradient =
           ctx.createRadialGradient(
@@ -2024,8 +2013,6 @@
 
       });
 
-
-      /* Bottom wave */
 
       wave.phase +=
         wave.speed;
@@ -2118,9 +2105,7 @@
     draw();
 
 
-    /* ─────────────────────────
-       HAMBURGER MENU
-    ───────────────────────── */
+    /* HAMBURGER MENU */
 
     const hamburger =
       document.getElementById(
@@ -2148,9 +2133,6 @@
       }
     );
 
-
-    /* Close mobile menu after
-       selecting a page */
 
     const mobileLinks =
       mobileMenu.querySelectorAll(
@@ -2180,9 +2162,7 @@
     );
 
 
-    /* ─────────────────────────
-       FADE-IN ON SCROLL
-    ───────────────────────── */
+    /* FADE-IN ON SCROLL */
 
     const fadeElements =
       document.querySelectorAll(
