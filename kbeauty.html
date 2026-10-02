@@ -229,6 +229,22 @@
     }
 
     /* ─────────────────────────
+       DESCRIPTION LINK
+    ───────────────────────── */
+
+    .body-text a{
+      color:inherit;
+      text-decoration:underline;
+      text-decoration-color:#c47a8a;
+      text-underline-offset:3px;
+      transition:color 0.2s ease;
+    }
+
+    .body-text a:hover{
+      color:#c47a8a;
+    }
+
+    /* ─────────────────────────
        GALLERY
        4:5 PORTRAIT IMAGES
     ───────────────────────── */
@@ -242,15 +258,16 @@
     .gallery-img{
       width:100%;
       display:block;
-      border-radius:14px;
 
       /*
-        All images are 1080 × 1350,
-        which is exactly a 4:5 ratio.
+        All gallery images use a 4:5
+        portrait format.
       */
-      aspect-ratio:4/5;
 
+      aspect-ratio:4/5;
       object-fit:cover;
+
+      border-radius:14px;
 
       box-shadow:
         0 8px 28px rgba(180,110,140,0.16);
@@ -268,20 +285,7 @@
     }
 
     /* ─────────────────────────
-       LAST TWO IMAGES
-       CENTER THEM ON DESKTOP
-    ───────────────────────── */
-
-    .gallery-img:nth-child(10){
-      grid-column:2;
-    }
-
-    .gallery-img:nth-child(11){
-      grid-column:3;
-    }
-
-    /* ─────────────────────────
-       CTAs
+       CTA BUTTONS
     ───────────────────────── */
 
     .cta-wrap{
@@ -359,7 +363,7 @@
     }
 
     /* ─────────────────────────
-       HAMBURGER MENU
+       HAMBURGER
     ───────────────────────── */
 
     .hamburger{
@@ -418,7 +422,9 @@
       transform:translateY(-6.5px) rotate(-45deg);
     }
 
-    /* MOBILE MENU */
+    /* ─────────────────────────
+       MOBILE MENU
+    ───────────────────────── */
 
     .mobile-menu{
       display:none;
@@ -515,16 +521,6 @@
         grid-template-columns:repeat(2,1fr);
       }
 
-      /*
-        Reset the desktop positioning
-        so all images flow normally
-        on smaller screens.
-      */
-
-      .gallery-img:nth-child(10),
-      .gallery-img:nth-child(11){
-        grid-column:auto;
-      }
     }
 
     /* ─────────────────────────
@@ -575,6 +571,7 @@
       .gallery-img{
         border-radius:11px;
       }
+
     }
 
     @media(max-width:480px){
@@ -596,6 +593,7 @@
       .gallery-img{
         border-radius:10px;
       }
+
     }
 
   </style>
@@ -605,22 +603,34 @@
 
   <canvas id="bg-canvas"></canvas>
 
-  <!-- NAV -->
+
+  <!-- ─────────────────────────
+       NAV
+  ───────────────────────── -->
 
   <nav>
 
-    <a class="nav-logo" href="index.html">
+    <a
+      class="nav-logo"
+      href="index.html"
+    >
 
       <img
         src="logo.png"
         alt="Katelyn Gunawan logo"
       />
 
-      <span>Katelyn Gunawan</span>
+      <span>
+        Katelyn Gunawan
+      </span>
 
     </a>
 
-    <ul class="nav-pills" id="navPills">
+
+    <ul
+      class="nav-pills"
+      id="navPills"
+    >
 
       <li>
         <a href="uiux.html">
@@ -651,6 +661,7 @@
 
     </ul>
 
+
     <!-- HAMBURGER -->
 
     <button
@@ -668,7 +679,9 @@
   </nav>
 
 
-  <!-- MOBILE MENU -->
+  <!-- ─────────────────────────
+       MOBILE MENU
+  ───────────────────────── -->
 
   <div
     class="mobile-menu"
@@ -697,9 +710,12 @@
   </div>
 
 
-  <!-- PAGE -->
+  <!-- ─────────────────────────
+       PAGE
+  ───────────────────────── -->
 
   <div class="page">
+
 
     <!-- HERO -->
 
@@ -727,23 +743,25 @@
     <div class="divider"></div>
 
 
-    <!-- GALLERY -->
+    <!-- ─────────────────────────
+         GALLERY
+    ───────────────────────── -->
 
     <section>
 
       <div class="gallery">
 
 
-        <!-- 01 -->
+        <!-- 01 — What's in My Bag -->
 
         <img
           class="gallery-img"
-          src="graphicdesigns/kbeauty/glowonthego.png"
-          alt="Glow on the Go"
+          src="graphicdesigns/kbeauty/What'sinBag.jpg"
+          alt="What's in My Bag"
         />
 
 
-        <!-- 02 -->
+        <!-- 02 — Let's Go Shopping -->
 
         <img
           class="gallery-img"
@@ -752,70 +770,7 @@
         />
 
 
-        <!-- 03 -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/cooltone.png"
-          alt="Cool Tone"
-        />
-
-
-        <!-- 04 -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/sweettreat.png"
-          alt="Sweet Treats"
-        />
-
-
-        <!-- 05 -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/luckycharms.png"
-          alt="Lucky Charms"
-        />
-
-
-        <!-- 06 -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/summeressentials.png"
-          alt="Summer Essentials"
-        />
-
-
-        <!-- 07 -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/summernotebook.png"
-          alt="Summer Notebook"
-        />
-
-
-        <!-- 08 — NEW -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/GirlBag%20Essentials.jpg"
-          alt="Girl Bag Essentials"
-        />
-
-
-        <!-- 09 — NEW -->
-
-        <img
-          class="gallery-img"
-          src="graphicdesigns/kbeauty/WhatsinBag.png"
-          alt="What's in My Bag"
-        />
-
-
-        <!-- 10 — NEW -->
+        <!-- 03 — Polaroid -->
 
         <img
           class="gallery-img"
@@ -824,7 +779,61 @@
         />
 
 
-        <!-- 11 — NEW -->
+        <!-- 04 — Glow on the Go -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/glowonthego.png"
+          alt="Glow on the Go"
+        />
+
+
+        <!-- 05 — Cool Tone -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/cooltone.png"
+          alt="Cool Tone"
+        />
+
+
+        <!-- 06 — Girl Bag Essentials -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/GirlBag%20Essentials.jpg"
+          alt="Girl Bag Essentials"
+        />
+
+
+        <!-- 07 — Sweet Treats -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/sweettreat.png"
+          alt="Sweet Treats"
+        />
+
+
+        <!-- 08 — Lucky Charms -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/luckycharms.png"
+          alt="Lucky Charms"
+        />
+
+
+        <!-- 09 — Summer Notebook -->
+
+        <img
+          class="gallery-img"
+          src="graphicdesigns/kbeauty/summernotebook.png"
+          alt="Summer Notebook"
+        />
+
+
+        <!-- 10 — Receipt -->
 
         <img
           class="gallery-img"
@@ -840,26 +849,32 @@
     <div class="divider"></div>
 
 
-    <!-- DESCRIPTION -->
+    <!-- ─────────────────────────
+         DESCRIPTION
+    ───────────────────────── -->
 
     <section>
 
       <p class="body-text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Quisque faucibus ex sapien vitae pellentesque sem placerat.
-        In id cursus mi, pretium eleifend nisl. Proin hendrerit sem
-        vel elit iaculis, vel venenatis nunc vulputate. Aliquam erat
-        volutpat. Curabitur lacinia felis at neque tincidunt, vel
-        porttitor est cursus. Sed euismod magna a nisl cursus, ut
-        tristique lorem venenatis. Nulla facilisi. Vestibulum ante
-        ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia curae.
+
+        As a design intern at
+        <a
+          href="https://www.kbeautymakeup.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >K-Beauty Makeup</a>,
+        I create graphics for social media platforms including
+        Instagram and Pinterest to promote products, strengthen
+        brand identity, and expand audience engagement.
+
       </p>
 
     </section>
 
 
-    <!-- CTA -->
+    <!-- ─────────────────────────
+         CTA
+    ───────────────────────── -->
 
     <div class="cta-wrap">
 
@@ -882,7 +897,9 @@
   </div>
 
 
-  <!-- FOOTER -->
+  <!-- ─────────────────────────
+       FOOTER
+  ───────────────────────── -->
 
   <footer>
 
@@ -1038,7 +1055,9 @@
   </footer>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- ─────────────────────────
+       JAVASCRIPT
+  ───────────────────────── -->
 
   <script>
 
@@ -1112,7 +1131,9 @@
     );
 
 
-    /* BUBBLES */
+    /* ─────────────────────────
+       BUBBLES
+    ───────────────────────── */
 
     const bubbles = [];
 
@@ -1209,7 +1230,9 @@
     }
 
 
-    /* WAVE */
+    /* ─────────────────────────
+       WAVE
+    ───────────────────────── */
 
     const wave = {
 
@@ -1225,7 +1248,9 @@
     let t = 0;
 
 
-    /* DRAW */
+    /* ─────────────────────────
+       DRAW BACKGROUND
+    ───────────────────────── */
 
     function draw(){
 
@@ -1433,6 +1458,8 @@
       );
 
 
+      /* WAVE */
+
       wave.phase +=
         wave.speed;
 
@@ -1540,6 +1567,8 @@
       ctx.restore();
 
 
+      /* MOUSE GLOW */
+
       if(
         mouse.x > 0
       ){
@@ -1599,7 +1628,9 @@
     draw();
 
 
-    /* HAMBURGER MENU */
+    /* ─────────────────────────
+       HAMBURGER MENU
+    ───────────────────────── */
 
     const hamburger =
       document.getElementById(
