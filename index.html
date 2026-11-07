@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="localmedia.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Katelyn Gunawan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -75,8 +76,8 @@
       transition: transform 0.3s ease;
     }
     .nav-logo span {
-      font-family: 'Urbanist', sans-serif;
-      font-size: 1.05rem; font-weight: 400;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem; font-weight: 300;
       color: var(--text-dark); letter-spacing: 0.04em;
       transition: color 0.3s ease;
     }
@@ -135,6 +136,7 @@
     }
 
     .hero-eyebrow {
+      font-family: 'Outfit', sans-serif;
       font-size: 1.05rem;
       font-weight: 300;
       color: var(--text-dark);
@@ -143,9 +145,10 @@
     }
 
     .hero-name {
-      font-family: 'Urbanist', sans-serif;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.01em;
       font-size: clamp(2.8rem, 5vw, 4.2rem);
-      font-weight: 700;
+      font-weight: 400;
       color: var(--text-dark);
       line-height: 1.1;
       margin-bottom: 28px;
@@ -314,9 +317,10 @@
     .card-text { flex: 1; padding-left: 8px; }
 
     .card-title {
-      font-family: 'Urbanist', sans-serif;
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.01em;
       font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 700;
+      font-weight: 400;
       color: var(--text-dark);
       line-height: 1.1;
       margin-bottom: 10px;
@@ -346,7 +350,8 @@
       transition: background 0.2s, color 0.2s, border-color 0.2s;
       cursor: pointer;
     }
-    .btn-case:hover {
+    .btn-case:hover,
+    .project-card:hover .btn-case {
       background: #c8d98a;
       color: #4a5820;
       border-color: #c8d98a;
@@ -493,7 +498,118 @@
 </head>
 <body>
 
+  <!-- ── LOADING SCREEN (shows once per visit) ── -->
+  <div id="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <p class="loader-name">Katelyn Gunawan</p>
+      <div class="loader-bar"><span class="loader-fill"></span></div>
+      <p class="loader-meta"><span>Loading portfolio</span><span class="loader-pct">0%</span></p>
+    </div>
+  </div>
+  <style>
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fce8ef 0%, #fef0f4 45%, #ffffff 100%);
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+    #loader.done { opacity: 0; visibility: hidden; }
+    .loader-inner {
+      width: min(320px, 76vw);
+      text-align: center;
+      transition: transform 0.7s ease;
+    }
+    #loader.done .loader-inner { transform: translateY(-12px); }
+    .loader-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      font-size: 1.6rem;
+      letter-spacing: -0.01em;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: loader-in 0.6s ease 0.1s forwards;
+    }
+    .loader-bar {
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 0 1px rgba(210,140,170,0.18);
+      overflow: hidden;
+    }
+    .loader-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f0b3c6, #c8d98a);
+      box-shadow: 0 0 10px rgba(240,179,198,0.7);
+      transition: width 0.25s ease;
+    }
+    .loader-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(80,50,65,0.55);
+    }
+    .loader-pct { font-variant-numeric: tabular-nums; }
+    @keyframes loader-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: none; }
+    }
+  </style>
+  <script>
+    (function () {
+      var loader = document.getElementById('loader');
+      var seen = false;
+      try { seen = sessionStorage.getItem('kg-loaded') === '1'; } catch (e) {}
+      if (seen) { loader.remove(); return; }
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var MIN = reduce ? 300 : 1600, MAX = 4000;
+      var fill = loader.querySelector('.loader-fill');
+      var pct = loader.querySelector('.loader-pct');
+      var start = performance.now(), ready = false, finished = false, shown = 0;
+
+      function finish() {
+        if (finished) return;
+        finished = true;
+        fill.style.width = '100%'; pct.textContent = '100%';
+        try { sessionStorage.setItem('kg-loaded', '1'); } catch (e) {}
+        setTimeout(function () {
+          loader.classList.add('done');
+          setTimeout(function () { loader.remove(); }, 800);
+        }, 250);
+      }
+
+      function tick(now) {
+        if (finished) return;
+        var t = Math.min((now - start) / MIN, 1);
+        var target = ready ? 100 * t : Math.min(90 * t, 90);
+        shown += (target - shown) * 0.15;
+        fill.style.width = shown.toFixed(1) + '%';
+        pct.textContent = Math.round(shown) + '%';
+        if ((ready && t >= 1) || now - start > MAX) return finish();
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      var fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+      document.addEventListener('DOMContentLoaded', function () {
+        fontsReady.then(function () { ready = true; });
+      });
+    })();
+  </script>
+
   <canvas id="bg-canvas"></canvas>
+
 
   <!-- NAV -->
   <nav>
@@ -787,6 +903,90 @@
     .project-card:nth-child(1) { transition-delay: 0s; }
     .project-card:nth-child(2) { transition-delay: 0.12s; }
     .project-card:nth-child(3) { transition-delay: 0.24s; }
+
+    /* ── CARD REVEAL: slide in + scan-line shimmer ── */
+    .project-card { position: relative; }
+    .project-card.fade-in { transform: translateX(-48px); }
+    .project-card.fade-in:nth-child(even) { transform: translateX(48px); }
+    .project-card.fade-in.visible { transform: translateX(0); }
+    .project-card.fade-in.visible:hover { transform: translateY(-3px); }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 2;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, transparent 40%, rgba(255,255,255,0.22) 47%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.22) 53%, transparent 60%);
+      background-size: 100% 100%, 100% 300%;
+      background-position: 0 0, 0 100%;
+    }
+    /* scrolling down: light bar sweeps top → bottom; scrolling up: bottom → top */
+    .project-card.scan-down::after { animation: card-scan-down 1.4s ease-out forwards; }
+    .project-card.scan-up::after   { animation: card-scan-up 1.4s ease-out forwards; }
+    .project-card:nth-child(2).scan-down::after,
+    .project-card:nth-child(2).scan-up::after { animation-delay: 0.08s; }
+    .project-card:nth-child(3).scan-down::after,
+    .project-card:nth-child(3).scan-up::after { animation-delay: 0.16s; }
+
+    @keyframes card-scan-down {
+      0%   { opacity: 0; background-position: 0 0, 0 100%; }
+      12%  { opacity: 1; }
+      55%  { opacity: 1; }
+      100% { opacity: 0; background-position: 0 0, 0 0%; }
+    }
+    @keyframes card-scan-up {
+      0%   { opacity: 0; background-position: 0 0, 0 0%; }
+      12%  { opacity: 1; }
+      55%  { opacity: 1; }
+      100% { opacity: 0; background-position: 0 0, 0 100%; }
+    }
+
+    /* ── BORDER GLEAM on hover: soft white light runs along the edge ── */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2.5px;
+      pointer-events: none;
+      background: conic-gradient(from var(--gleam-angle),
+        transparent 0deg,
+        rgba(255,255,255,0) 250deg,
+        rgba(255,220,235,0.9) 300deg,
+        #ffffff 330deg,
+        rgba(255,220,235,0.9) 345deg,
+        transparent 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.95)) drop-shadow(0 0 12px rgba(240,170,200,0.6));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    @property --gleam-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+    .project-card:hover::before {
+      opacity: 1;
+      animation: border-gleam 2.2s linear infinite;
+    }
+    @keyframes border-gleam {
+      to { --gleam-angle: 360deg; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card::before { display: none; }
+      .project-card.fade-in,
+      .project-card.fade-in:nth-child(even) { transform: none; }
+      .project-card::after { display: none; }
+    }
   </style>
 
   <script>
@@ -805,6 +1005,30 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    /* ── SCAN-LINE SHIMMER: replays every time a card scrolls into view ── */
+    let lastY = window.scrollY, scrollDir = 'down';
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y !== lastY) scrollDir = y > lastY ? 'down' : 'up';
+      lastY = y;
+    }, { passive: true });
+
+    const scanObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const card = e.target;
+        card.classList.remove('scan-down', 'scan-up');
+        void card.offsetWidth; /* restart the animation */
+        card.classList.add('scan-' + scrollDir);
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('.project-card').forEach(c => {
+      c.addEventListener('animationend', ev => {
+        if (ev.animationName.startsWith('card-scan')) c.classList.remove('scan-down', 'scan-up');
+      });
+      scanObserver.observe(c);
+    });
 
     /* ── 3D CARD TILT removed ── */
 

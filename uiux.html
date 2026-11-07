@@ -276,6 +276,8 @@
       opacity: 1;
     }
 
+    .fads-card, .kbeauty-card { opacity: 1; }
+
     /* ─────────────────────────
        CARD MEDIA
     ───────────────────────── */
@@ -1080,6 +1082,31 @@
       }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── SITE HEADINGS: Outfit (matches home) ── */
+    h1, h2, h3, .hero-title, .card-title, .walk-title, .goal-title, .clip-title, .kc-title, .zine-heading, .overlay-title {
+      font-family: 'Outfit', sans-serif !important; font-weight: 400 !important; letter-spacing: -0.01em;
+    }
+    .hero-eyebrow, .nav-logo span { font-family: 'Outfit', sans-serif !important; font-weight: 300 !important; }
+  </style>
+  <style>
+    /* ── SCROLLING HOMEPAGE THUMBNAILS in laptop mockup (FADS + K-Beauty) ── */
+    .cover-img-wrap:has(.laptop-mock) { overflow: visible !important; border-radius: 0 !important; }
+    .laptop-mock { position: relative; width: 100%; }
+    @media (min-width: 801px) { .laptop-mock { width: 116%; margin-left: -20%; } }
+    .cover-img-wrap:has(.laptop-mock) { height: auto !important; width: 100% !important; margin: auto 0; align-self: center; }
+    @media (max-width: 800px) { .card-media:has(.laptop-mock) { height: auto; } .laptop-mock { max-width: 360px; margin: 0 auto; } }
+    .coming-soon-card .cover-img-wrap img.laptop-frame { width: 100%; height: auto; display: block; border-radius: 0; object-fit: initial; }
+    .laptop-screen { position: absolute; left: 10.14%; top: 3.59%; width: 79.73%; height: 85.14%;
+      overflow: hidden; container-type: size; background: #fff; border-radius: 4px 4px 0 0; }
+    .coming-soon-card .cover-img-wrap .laptop-screen img.scroll-thumb { width: 100%; height: auto; display: block; border-radius: 0; object-fit: initial;
+      animation: thumbPan 30s ease-in-out infinite alternate; }
+    .coming-soon-card:hover .cover-img-wrap img { transform: none; }
+    .project-card:hover .laptop-screen img.scroll-thumb { animation-play-state: paused; }
+    @keyframes thumbPan { 0%, 8% { transform: translateY(0); } 92%, 100% { transform: translateY(calc(-100% + 100cqh)); } }
+    @media (prefers-reduced-motion: reduce) { img.scroll-thumb { animation: none !important; } }
+  </style>
 </head>
 
 <body>
@@ -1188,6 +1215,84 @@
   <!-- PROJECTS -->
 
   <div class="projects">
+
+    <!-- FADS WEBSITE -->
+
+    <a
+      href="fads.html"
+      class="project-card coming-soon-card fads-card"
+    >
+
+      <div class="card-media">
+
+        <div class="cover-img-wrap">
+
+          <div class="laptop-mock">
+            <img class="laptop-frame" src="matuto/matutocover.png" alt="" aria-hidden="true" />
+            <div class="laptop-screen"><img class="scroll-thumb" src="hero/fads-scroll.jpg" alt="Fashion and Design Society website project" /></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card-text">
+
+        <h2 class="card-title">
+          FADS Website
+        </h2>
+
+        <p class="card-subtitle">
+          Fashion and Design Society Website
+        </p>
+
+        <span class="btn-case">
+          View Case Study
+        </span>
+
+      </div>
+
+    </a>
+
+
+    <!-- K-BEAUTY MAKEUP -->
+
+    <a
+      href="kbeautymakeup.html"
+      class="project-card coming-soon-card kbeauty-card"
+    >
+
+      <div class="card-media">
+
+        <div class="cover-img-wrap">
+
+          <div class="laptop-mock">
+            <img class="laptop-frame" src="matuto/matutocover.png" alt="" aria-hidden="true" />
+            <div class="laptop-screen"><img class="scroll-thumb" src="hero/kb-scroll.jpg" alt="K-Beauty Makeup website project" /></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card-text">
+
+        <h2 class="card-title">
+          K-Beauty Makeup
+        </h2>
+
+        <p class="card-subtitle">
+          E-Commerce Website Redesign
+        </p>
+
+        <span class="btn-case">
+          View Case Study
+        </span>
+
+      </div>
+
+    </a>
+
 
 
     <!-- PRIDENTITY -->
@@ -1351,82 +1456,8 @@
     </a>
 
 
-    <!-- K-BEAUTY MAKEUP -->
-
-    <a
-      href="kbeautymakeup.html"
-      class="project-card coming-soon-card kbeauty-card"
-    >
-
-      <div class="card-media">
-
-        <div class="cover-img-wrap">
-
-          <img
-            src="kbeautycover.png"
-            alt="K-Beauty Makeup website project"
-          />
-
-        </div>
-
-      </div>
-
-      <div class="card-text">
-
-        <h2 class="card-title">
-          K-Beauty Makeup
-        </h2>
-
-        <p class="card-subtitle">
-          E-Commerce Website Redesign
-        </p>
-
-        <span class="btn-case">
-          Coming Soon
-        </span>
-
-      </div>
-
-    </a>
 
 
-    <!-- FADS WEBSITE -->
-
-    <a
-      href="fads.html"
-      class="project-card coming-soon-card fads-card"
-    >
-
-      <div class="card-media">
-
-        <div class="cover-img-wrap">
-
-          <img
-            src="fadscover.png"
-            alt="Fashion and Design Society website project"
-          />
-
-        </div>
-
-      </div>
-
-      <div class="card-text">
-
-        <h2 class="card-title">
-          FADS Website
-        </h2>
-
-        <p class="card-subtitle">
-          Fashion and Design Society Website
-        </p>
-
-        <span class="btn-case">
-          Coming Soon
-        </span>
-
-      </div>
-
-    </a>
 
   </div>
 
