@@ -505,6 +505,7 @@
     /* fallback scale for browsers without unit division */
     addEventListener('load',()=>{const f=document.querySelector('.live-frame');if(!f)return;const fit=()=>{f.querySelector('iframe').style.transform='scale('+f.clientWidth/1440+')'};fit();addEventListener('resize',fit);});
   </script>
+  <link rel="stylesheet" href="gleam.css" />
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
@@ -718,7 +719,7 @@
 
   <!-- CTAs -->
   <div class="cta-wrap">
-    <a href="https://fadsatucdavis.framer.website/" target="_blank" rel="noopener" class="btn-cta">Visit Live Site</a>
+    <a href="kbeautymakeup.html" class="btn-cta">Next Project</a>
     <a href="uiux.html" class="btn-outline">← Back to All UI/UX</a>
   </div>
 
@@ -856,5 +857,6 @@ draw();
   fit();
 })();
 </script>
+<script src="gleam.js"></script>
 </body>
 </html>

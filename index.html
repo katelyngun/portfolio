@@ -495,6 +495,44 @@
       nav .nav-logo img { height: 38px !important; width: 38px !important; }
     }
   </style>
+  <link rel="stylesheet" href="gleam.css" />
+  <style>
+    /* ══ HERO PLAY: glossy name (4), depth parallax + bubbles (5) ══ */
+
+    /* 4: glossy name, a light highlight follows the cursor across the letters */
+    .hero-name {
+      --gx: 30%; --gy: 20%;
+      background:
+        radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,0.95) 0, rgba(255,230,242,0.7) 6%, rgba(255,255,255,0) 16%),
+        linear-gradient(180deg, #4a3a42 0%, var(--text-dark) 55%, #6b4a5a 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent; color: transparent;
+      filter: drop-shadow(0 2px 0 rgba(255,255,255,0.7)) drop-shadow(0 6px 14px rgba(210,140,170,0.18));
+      padding: 0.08em 0.06em 0.16em; margin-left: -0.06em; margin-bottom: 14px !important; display: inline-block;
+    }
+
+    /* 5: ambient glow orbs in the header's open space, drifting with the mouse */
+    .hero-left, .hero-right { position: relative; z-index: 1; }
+    .hero-bubbles { position: absolute; inset: -40px 0; pointer-events: none; z-index: 0; overflow: visible; }
+    .bubble {
+      position: absolute; border-radius: 50%;
+      width: var(--s); height: var(--s); left: var(--x); top: var(--y);
+      background: radial-gradient(circle, var(--c) 0%, transparent 68%);
+      filter: blur(16px); opacity: 1;
+      animation: orbPulse var(--d, 7s) ease-in-out infinite alternate;
+      transition: translate 0.6s cubic-bezier(.2,.7,.3,1);
+      will-change: transform, translate;
+    }
+    @keyframes orbPulse { to { transform: scale(1.15) translateY(-10px); opacity: 0.6; } }
+    .hero-right img { transition: transform 0.4s ease-out; will-change: transform; position: relative; z-index: 1; }
+    .hero-right { position: relative; }
+    .fairy-dust { position: absolute; left: -35%; top: -25%; width: 170%; height: 150%; pointer-events: none; z-index: 2; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bubble { animation: none; }
+    }
+    @media (max-width: 800px) { .bubble { opacity: 0.6; } .bubble:nth-child(n+4) { display: none; } }
+  </style>
 </head>
 <body>
 
@@ -638,6 +676,13 @@
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bubbles" aria-hidden="true">
+      <span class="bubble" data-depth="1.4" style="--s:260px;--x:62%;--y:-6%;--c:rgba(246,168,196,0.9);--d:7s"></span>
+      <span class="bubble" data-depth="0.8" style="--s:220px;--x:84%;--y:48%;--c:rgba(250,196,200,0.85);--d:9s"></span>
+      <span class="bubble" data-depth="1.8" style="--s:140px;--x:74%;--y:70%;--c:rgba(214,230,160,0.85);--d:6s"></span>
+      <span class="bubble" data-depth="1.1" style="--s:180px;--x:44%;--y:58%;--c:rgba(248,186,206,0.8);--d:8s"></span>
+      <span class="bubble" data-depth="2.2" style="--s:110px;--x:-2%;--y:6%;--c:rgba(252,200,196,0.85);--d:5.5s"></span>
+    </div>
     <div class="hero-left">
       <p class="hero-eyebrow">Hello, I'm</p>
       <h1 class="hero-name">Katelyn Gunawan</h1>
@@ -645,6 +690,7 @@
     </div>
 
     <div class="hero-right">
+      <canvas class="fairy-dust" aria-hidden="true"></canvas>
       <!-- Logo GIF -->
       <img src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/logogif.gif" alt="Katelyn Gunawan logo animation" style="object-fit:contain;">
     </div>
@@ -1034,12 +1080,97 @@
 
     /* ── PARALLAX on hero GIF ── */
     const heroGif = document.querySelector('.hero-right img');
-    window.addEventListener('scroll', () => {
-      if (heroGif) {
-        heroGif.style.transform = `translateY(${window.scrollY * 0.18}px)`;
+    const heroEl = document.querySelector('.hero');
+    const heroName = document.querySelector('.hero-name');
+    const heroBubbles = [...document.querySelectorAll('.bubble')];
+    let mx = 0, my = 0;
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function applyDepth() {
+      const sy = window.scrollY;
+      if (heroGif) heroGif.style.transform = `translate(${mx * -14}px, ${sy * 0.18 + my * -10}px)`;
+      heroBubbles.forEach(b => {
+        const d = +b.dataset.depth;
+        b.style.translate = `${mx * 90 * d}px ${my * 70 * d - sy * 0.25 * d}px`;
+      });
+    }
+    window.addEventListener('scroll', applyDepth, { passive: true });
+    if (!calm && heroEl) {
+      heroEl.addEventListener('mousemove', e => {
+        const r = heroEl.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width - 0.5;
+        my = (e.clientY - r.top) / r.height - 0.5;
+        requestAnimationFrame(applyDepth);
+        if (heroName) {
+          const n = heroName.getBoundingClientRect();
+          heroName.style.setProperty('--gx', ((e.clientX - n.left) / n.width * 100) + '%');
+          heroName.style.setProperty('--gy', ((e.clientY - n.top) / n.height * 100) + '%');
+        }
+      });
+      heroEl.addEventListener('mouseleave', () => { mx = my = 0; requestAnimationFrame(applyDepth); });
+    }
+    /* ── FAIRY DUST around the logo GIF ── */
+    (function () {
+      const cv = document.querySelector('.fairy-dust');
+      if (!cv || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = cv.getContext('2d');
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      let W = 0, H = 0;
+      const cols = ['255,255,255', '246,168,196', '250,205,218', '214,232,160', '255,228,236'];
+      const N = innerWidth < 800 ? 34 : 60;
+      const P = [];
+      function size() {
+        const r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+        cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-    });
+      size(); addEventListener('resize', size);
+      for (let i = 0; i < N; i++) {
+        const a = Math.random() * Math.PI * 2, rad = 0.22 + Math.random() * 0.24;
+        P.push({ a, rad, spin: (Math.random() < 0.5 ? -1 : 1) * (0.0006 + Math.random() * 0.0014),
+          ox: 0, oy: 0, vx: 0, vy: 0, s: 0.8 + Math.random() * 1.9, star: Math.random() < 0.3,
+          c: cols[i % cols.length], tw: Math.random() * 6.28, depth: 0.5 + Math.random() * 1.5 });
+      }
+      let mouse = null, pmx = 0, pmy = 0;
+      const hero = document.querySelector('.hero');
+      hero.addEventListener('mousemove', e => {
+        const r = cv.getBoundingClientRect();
+        mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+        const hr = hero.getBoundingClientRect();
+        pmx = (e.clientX - hr.left) / hr.width - 0.5; pmy = (e.clientY - hr.top) / hr.height - 0.5;
+      });
+      hero.addEventListener('mouseleave', () => { mouse = null; pmx = pmy = 0; });
+      function starPath(x, y, r) {
+        ctx.beginPath();
+        ctx.moveTo(x, y - r * 2.4); ctx.quadraticCurveTo(x, y, x + r * 2.4, y);
+        ctx.quadraticCurveTo(x, y, x, y + r * 2.4); ctx.quadraticCurveTo(x, y, x - r * 2.4, y);
+        ctx.quadraticCurveTo(x, y, x, y - r * 2.4); ctx.fill();
+      }
+      function tick(t) {
+        ctx.clearRect(0, 0, W, H);
+        const cx = W / 2, cy = H / 2;
+        P.forEach(p => {
+          p.a += p.spin;
+          const hx = cx + Math.cos(p.a) * p.rad * W + pmx * 120 * p.depth;
+          const hy = cy + Math.sin(p.a) * p.rad * H * 0.9 + pmy * 90 * p.depth;
+          let x = hx + p.ox, y = hy + p.oy;
+          if (mouse) {
+            const dx = x - mouse.x, dy = y - mouse.y, d2 = dx * dx + dy * dy;
+            if (d2 < 150 * 150) { const f = (1 - Math.sqrt(d2) / 150) * 2.6; const d = Math.sqrt(d2) || 1; p.vx += dx / d * f; p.vy += dy / d * f; }
+          }
+          p.vx += -p.ox * 0.02; p.vy += -p.oy * 0.02; p.vx *= 0.9; p.vy *= 0.9;
+          p.ox += p.vx; p.oy += p.vy;
+          const tw = 0.55 + 0.45 * Math.sin(t * 0.003 + p.tw);
+          ctx.fillStyle = `rgba(${p.c},${0.75 + 0.25 * tw})`;
+          ctx.shadowColor = `rgba(${p.c},0.9)`; ctx.shadowBlur = 6;
+          if (p.star) starPath(x, y, p.s * (0.7 + 0.3 * tw));
+          else { ctx.beginPath(); ctx.arc(x, y, p.s * (0.6 + 0.4 * tw), 0, 6.283); ctx.fill(); }
+        });
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+
 
   </script>
+<script src="gleam.js"></script>
 </body>
 </html>

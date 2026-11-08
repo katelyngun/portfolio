@@ -1094,7 +1094,6 @@
     /* ── SCROLLING HOMEPAGE THUMBNAILS in laptop mockup (FADS + K-Beauty) ── */
     .cover-img-wrap:has(.laptop-mock) { overflow: visible !important; border-radius: 0 !important; }
     .laptop-mock { position: relative; width: 100%; }
-    @media (min-width: 801px) { .laptop-mock { width: 116%; margin-left: -20%; } }
     .cover-img-wrap:has(.laptop-mock) { height: auto !important; width: 100% !important; margin: auto 0; align-self: center; }
     @media (max-width: 800px) { .card-media:has(.laptop-mock) { height: auto; } .laptop-mock { max-width: 360px; margin: 0 auto; } }
     .coming-soon-card .cover-img-wrap img.laptop-frame { width: 100%; height: auto; display: block; border-radius: 0; object-fit: initial; }
@@ -1106,6 +1105,116 @@
     .project-card:hover .laptop-screen img.scroll-thumb { animation-play-state: paused; }
     @keyframes thumbPan { 0%, 8% { transform: translateY(0); } 92%, 100% { transform: translateY(calc(-100% + 100cqh)); } }
     @media (prefers-reduced-motion: reduce) { img.scroll-thumb { animation: none !important; } }
+  </style>
+  <style>
+    /* ── SQUARE CARD GRID: 2 per row ── */
+    @media (min-width: 801px) {
+      .projects { display: grid !important; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 28px; }
+      .project-card { min-width: 0; }
+      .projects > .project-card:last-child:nth-child(odd) { grid-column: 1 / -1; width: calc(50% - 14px); margin: 0 auto; }
+      .project-card { flex-direction: column !important; align-items: stretch !important; gap: 22px !important;
+        padding: 36px 36px 32px !important; justify-content: flex-start; }
+      .project-card .card-media { flex: 1 1 auto !important; width: 100%; height: auto !important; min-height: 0;
+        display: flex; align-items: center; justify-content: center; }
+      .project-card .laptop-mock, .project-card .cover-img-wrap:not(:has(.laptop-mock)) { width: 100%; max-width: 360px; margin: 0 auto; height: auto !important; }
+      .project-card .card-text { flex: none; padding-left: 0 !important; text-align: center; margin-top: 14px; }
+      .project-card .card-title { font-size: clamp(1.6rem, 2.4vw, 2.1rem) !important; margin-bottom: 6px; }
+      .project-card .card-subtitle { margin-bottom: 18px; }
+    }
+  </style>
+  <style>
+    /* ── HOME CARD EFFECTS (copied from index.html) ── */
+    .project-card:hover .btn-case { background: #c8d98a; color: #4a5820; border-color: #c8d98a; }
+    /* ── CARD REVEAL: slide in + scan-line shimmer ── */
+    .project-card { position: relative; }
+    .project-card.fade-in { transform: translateX(-48px); }
+    .project-card.fade-in:nth-child(even) { transform: translateX(48px); }
+    .project-card.fade-in.visible { transform: translateX(0); }
+    .project-card.fade-in:last-child:nth-child(odd) { transform: translateY(28px); }
+    .project-card.fade-in.visible:last-child:nth-child(odd) { transform: none; }
+    .project-card.fade-in.visible:hover { transform: translateY(-3px); }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 2;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 4px),
+        linear-gradient(180deg, transparent 40%, rgba(255,255,255,0.22) 47%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.22) 53%, transparent 60%);
+      background-size: 100% 100%, 100% 300%;
+      background-position: 0 0, 0 100%;
+    }
+    /* scrolling down: light bar sweeps top → bottom; scrolling up: bottom → top */
+    .project-card.scan-down::after { animation: card-scan-down 1.4s ease-out forwards; }
+    .project-card.scan-up::after   { animation: card-scan-up 1.4s ease-out forwards; }
+    .project-card:nth-child(even).scan-down::after,
+    .project-card:nth-child(even).scan-up::after { animation-delay: 0.08s; }
+    
+
+    @keyframes card-scan-down {
+      0%   { opacity: 0; background-position: 0 0, 0 100%; }
+      12%  { opacity: 1; }
+      55%  { opacity: 1; }
+      100% { opacity: 0; background-position: 0 0, 0 0%; }
+    }
+    @keyframes card-scan-up {
+      0%   { opacity: 0; background-position: 0 0, 0 0%; }
+      12%  { opacity: 1; }
+      55%  { opacity: 1; }
+      100% { opacity: 0; background-position: 0 0, 0 100%; }
+    }
+
+    /* ── BORDER GLEAM on hover: soft white light runs along the edge ── */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 3.5px;
+      pointer-events: none;
+      background: conic-gradient(from var(--gleam-angle),
+        transparent 0deg,
+        rgba(255,255,255,0) 220deg,
+        rgba(244,170,205,0.95) 285deg,
+        #ffffff 325deg,
+        rgba(244,170,205,0.95) 348deg,
+        transparent 360deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+      filter: drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px rgba(236,140,185,0.85)) drop-shadow(0 0 22px rgba(236,140,185,0.55));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    @property --gleam-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+    .project-card:hover { box-shadow: 0 18px 50px rgba(220,130,170,0.35), 0 0 0 1px rgba(255,255,255,0.9) !important; }
+    .project-card:hover::before {
+      opacity: 1;
+      animation: border-gleam 2.2s linear infinite;
+    }
+    @keyframes border-gleam {
+      to { --gleam-angle: 360deg; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .project-card::before { display: none; }
+      .project-card.fade-in,
+      .project-card.fade-in:nth-child(even) { transform: none; }
+      .project-card::after { display: none; }
+    }
+  </style>
+  </style>
+  <link rel="stylesheet" href="gleam.css" />
+  <style>
+    .page-sub { margin-top: 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #c07090); }
   </style>
 </head>
 
@@ -1205,9 +1314,10 @@
 
   <section class="hero">
 
-    <h1 class="hero-title">
-      UI/UX Design
-    </h1>
+    <div>
+      <h1 class="hero-title">UI/UX Design</h1>
+      <p class="page-sub">Websites &amp; apps: research, design, development</p>
+    </div>
 
   </section>
 
@@ -2244,5 +2354,30 @@
 
   </script>
 
+<script>
+    let lastY = window.scrollY, scrollDir = 'down';
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y !== lastY) scrollDir = y > lastY ? 'down' : 'up';
+      lastY = y;
+    }, { passive: true });
+
+    const scanObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const card = e.target;
+        card.classList.remove('scan-down', 'scan-up');
+        void card.offsetWidth; /* restart the animation */
+        card.classList.add('scan-' + scrollDir);
+      });
+    }, { threshold: 0.35 });
+    document.querySelectorAll('.project-card').forEach(c => {
+      c.addEventListener('animationend', ev => {
+        if (ev.animationName.startsWith('card-scan')) c.classList.remove('scan-down', 'scan-up');
+      });
+      scanObserver.observe(c);
+    });
+</script>
+<script src="gleam.js"></script>
 </body>
 </html>

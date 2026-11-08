@@ -35,6 +35,16 @@
     if (node.querySelectorAll) node.querySelectorAll('[src]').forEach(swap);
   }
 
+  /* catch videos whose src is set by script (e.g. the popup player) before they start loading */
+  var d = Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype, 'src');
+  if (d && d.set) Object.defineProperty(HTMLMediaElement.prototype, 'src', {
+    configurable: true, get: d.get,
+    set: function (v) {
+      if (typeof v === 'string' && v.indexOf(REMOTE) === 0 && this.getAttribute('data-remote-fallback') !== v) v = LOCAL + v.slice(REMOTE.length);
+      d.set.call(this, v);
+    }
+  });
+
   new MutationObserver(function (muts) {
     muts.forEach(function (m) {
       if (m.type === 'attributes') swap(m.target);

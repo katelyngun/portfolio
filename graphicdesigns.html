@@ -188,7 +188,7 @@
     }
 
     .card-title {
-      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-size: clamp(1.35rem, 2.4vw, 1.75rem); line-height: 1.25;
       font-weight: 600;
       letter-spacing: 0.02em;
       color: var(--text-dark);
@@ -487,6 +487,18 @@
     }
     .hero-eyebrow, .nav-logo span { font-family: 'Outfit', sans-serif !important; font-weight: 300 !important; }
   </style>
+  <link rel="stylesheet" href="gleam.css" />
+  <style>
+    .page-sub { margin-top: 12px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #c07090); }
+    .section-card .card-footer { margin-top: 12px; }
+    .card-role { margin-top: -6px; font-size: 0.8rem; letter-spacing: 0.06em; color: var(--text-mid, #8a7a80); text-align: center; }
+    .reach-badge { position: absolute; top: 18px; left: 18px; z-index: 4; display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 13px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.05em; color: #4a5820;
+      background: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 4px 14px rgba(210,140,170,0.22); }
+    .reach-badge svg { width: 12px; height: 12px; fill: #e07aa5; filter: drop-shadow(0 0 3px rgba(224,122,165,0.6)); }
+    @media (max-width: 600px) { .reach-badge { top: 12px; left: 12px; font-size: 0.66rem; } }
+  </style>
 </head>
 
 <body>
@@ -523,7 +535,10 @@
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="hero-title">Graphic Design</h1>
+  <div>
+    <h1 class="hero-title">Graphic Design</h1>
+    <p class="page-sub">Brand marketing and editorial storytelling</p>
+  </div>
 </section>
 
 <!-- SECTION CARDS -->
@@ -565,6 +580,7 @@
 
     <div class="card-footer">
       <p class="card-title"><em>K-Beauty Makeup</em> Social Media Posts</p>
+      <p class="card-role">Social Media Marketing Graphic Design</p>
       <span class="btn-view">View</span>
     </div>
   </a>
@@ -605,12 +621,14 @@
 
     <div class="card-footer">
       <p class="card-title">The Last Unicorn Editorial Designs</p>
+      <p class="card-role">Co-Creative Direction + Graphic Design</p>
       <span class="btn-view">View</span>
     </div>
   </a>
 
   <!-- 3: Princess and the Pea -->
   <a href="princessandpea.html" class="section-card pea-card">
+    <span class="reach-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5l3.1 6.6 7.2.9-5.3 5 1.4 7.1L12 17.6l-6.4 3.5 1.4-7.1-5.3-5 7.2-.9z" stroke-linejoin="round"/></svg>Featured in Dream World Girl Zine, Issue 05</span>
     <div class="img-strip">
 
       <div class="strip-img-wrap">
@@ -645,6 +663,7 @@
 
     <div class="card-footer">
       <p class="card-title">Princess and the Pea Editorial Designs</p>
+      <p class="card-role">Co-Creative Direction + Graphic Design</p>
       <span class="btn-view">View</span>
     </div>
   </a>
@@ -953,5 +972,6 @@
   });
 </script>
 
+<script src="gleam.js"></script>
 </body>
 </html>
