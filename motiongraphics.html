@@ -507,7 +507,7 @@
       </svg>
     </button>
     <div class="overlay-video-wrap">
-      <video id="overlay-video" controls playsinline></video>
+      <video id="overlay-video" controls muted playsinline></video>
     </div>
     <div class="overlay-body">
       <h2 class="overlay-title" id="overlay-title"></h2>
@@ -552,6 +552,7 @@
     mu.style.display = m ? '' : 'none';
     document.getElementById('reach-metro').hidden = title !== 'My Little Metro Editorial';
     vid.src = src;
+    vid.muted = true;
     vid.load();
     vid.play();
     overlay.classList.add('open');

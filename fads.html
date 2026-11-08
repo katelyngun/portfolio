@@ -350,6 +350,14 @@
     /* ══ FADS CASE STUDY ADDITIONS ══ */
 
 
+    .build-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; margin-top: 20px; }
+    .build-item { margin: 0; }
+    .build-shot, .build-item img { width: 100%; aspect-ratio: 16/10; border-radius: 14px; object-fit: cover; object-position: top; display: flex; }
+    .build-item img { display: block; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 8px 32px rgba(210,140,170,0.18); }
+    .build-item figcaption { margin-top: 12px; font-size: 0.9rem; color: var(--text-mid); line-height: 1.5; }
+    .build-item figcaption strong { display: block; color: var(--text-dark, #3a2530); font-size: 1rem; margin-bottom: 2px; }
+    @media (max-width: 700px) { .build-grid { grid-template-columns: 1fr; } }
+
     /* in-progress labels */
     .wip-tag {
       font-size: 0.66rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
@@ -561,7 +569,7 @@
   <section>
     <p class="section-label">Overview</p>
     <p class="body-text">
-      The Fashion and Design Society (FADS) is a student club at UC Davis. This website brings everything about the club into one place: who we are, what we make, and how to get involved. The work was split between my Co-Web Designer and me, with my focus on the experience and interactivity: the animations, motion, and game-ified editorial aesthetic that give the site its personality.
+      The Fashion and Design Society (FADS) is a student club at UC Davis. This website brings everything about the club into one place: who we are, what we make, and how to get involved.
     </p>
 
     <div class="ps-grid">
@@ -603,26 +611,6 @@
 
   <div class="divider"></div>
 
-  <!-- PROCESS (short) -->
-  <section>
-    <p class="section-label">Process</p>
-    <p class="body-text">
-      The site started as rough lo-fi wireframes mapping out the pages and how visitors would move between them. The design changed a lot during the build, so instead of tidy step-by-step iterations, most of the shaping happened through brainstorming, mood boards, and visual guides that kept the look consistent.
-    </p>
-    <div class="two-col">
-      <div>
-        <div class="ph ph-half">Lo-fi wireframes</div>
-        <p class="caption">Rough wireframes</p>
-      </div>
-      <div>
-        <div class="ph ph-half">Brainstorm + inspo</div>
-        <p class="caption">Ideation, inspo, and visual guides</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
   <!-- FINAL PRODUCT -->
   <section>
     <p class="section-label">Final Product</p>
@@ -653,57 +641,30 @@
       </div>
     </div>
     <div class="walk">
-      <div class="walk-head"><span class="walk-num">04</span><h3 class="walk-title">Meet the Board</h3><span class="wip-tag">In progress</span></div>
-      <p class="body-text">[Board members are shown like a character select screen. Click a member to open their player card with their role, year, and bio.]</p>
-      <p class="wip-note">This page is still being built, so what you see here may change.</p>
-      <div class="site-embed" data-src="https://fadsatucdavis.framer.website/about/ourboard">
-        <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/about/ourboard</span><a class="embed-open" href="https://fadsatucdavis.framer.website/about/ourboard" target="_blank" rel="noopener">Open ↗</a></div>
-        <div class="embed-view"><iframe title="FADS website: Board page + player cards" loading="lazy" src="https://fadsatucdavis.framer.website/about/ourboard"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
-      </div>
-    </div>
-    <div class="walk">
-      <div class="walk-head"><span class="walk-num">05</span><h3 class="walk-title">Magazine</h3></div>
+      <div class="walk-head"><span class="walk-num">04</span><h3 class="walk-title">Magazine</h3></div>
       <p class="body-text">[Where our magazine issues live, with a flip-through preview so visitors can browse each issue.]</p>
       <div class="site-embed" data-src="https://fadsatucdavis.framer.website/magazine">
         <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/magazine</span><a class="embed-open" href="https://fadsatucdavis.framer.website/magazine" target="_blank" rel="noopener">Open ↗</a></div>
         <div class="embed-view"><iframe title="FADS website: Editorials + magazine flip" loading="lazy" src="https://fadsatucdavis.framer.website/magazine"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
       </div>
     </div>
-    <div class="walk">
-      <div class="walk-head"><span class="walk-num">06</span><h3 class="walk-title">Editorials</h3><span class="wip-tag">In progress</span></div>
-      <p class="body-text">[Where our editorial photoshoots live.]</p>
-      <p class="wip-note">This page isn't live yet. A preview is coming soon.</p>
-      <div class="ph ph-wide">Coming soon<small>Editorials page</small></div>
-    </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- INTERACTIONS -->
+  <!-- BUILDING -->
   <section>
-    <p class="section-label">Interactions + Motion</p>
-    <p class="body-text">The details I had the most fun with: small animations that make the site feel alive and a little playful.</p>
-    <div class="clip-grid">
-      <div>
-        <div class="ph ph-clip">Clip</div>
-        <p class="clip-title">Player card overlay</p>
-        <p class="clip-text">[What it does and why]</p>
-      </div>
-      <div>
-        <div class="ph ph-clip">Clip</div>
-        <p class="clip-title">Neon border glow</p>
-        <p class="clip-text">[What it does and why]</p>
-      </div>
-      <div>
-        <div class="ph ph-clip">Clip</div>
-        <p class="clip-title">Typewriter bios</p>
-        <p class="clip-text">[What it does and why]</p>
-      </div>
-      <div>
-        <div class="ph ph-clip">Clip</div>
-        <p class="clip-title">Magazine flip preview</p>
-        <p class="clip-text">[What it does and why]</p>
-      </div>
+    <div class="walk-head"><p class="section-label" style="margin:0">Currently Building</p><span class="wip-tag">In progress</span></div>
+    <p class="body-text">Two pages still in the works.</p>
+    <div class="build-grid">
+      <figure class="build-item">
+        <div class="ph build-shot">Screenshot<small>Meet the Board</small></div>
+        <figcaption><strong>Meet the Board</strong>A "choose your character" game style intro to the FADS board.</figcaption>
+      </figure>
+      <figure class="build-item">
+        <img src="fads/building-editorials.webp" alt="FADS Editorials page in progress: The Archive grid of past shoots">
+        <figcaption><strong>Editorials</strong>An exhibition of all the editorials in FADS.</figcaption>
+      </figure>
     </div>
   </section>
 
