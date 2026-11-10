@@ -433,7 +433,7 @@
     .meta-text a { color: var(--text-dark); text-decoration: underline; text-underline-offset: 3px; }
 
     /* goals: 3 glass cards */
-    .goal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+    .goal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 28px; }
     .goal-num {
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 8px;
     }
@@ -569,7 +569,7 @@
   <section>
     <p class="section-label">Overview</p>
     <p class="body-text">
-      The Fashion and Design Society (FADS) is a student club at UC Davis. This website brings everything about the club into one place: who we are, what we make, and how to get involved.
+      The Fashion and Design Society (FADS) is a student club at UC Davis. This website brings everything about the club into one place: who we are, what we make, and how to get involved. It also promotes FADS to future collaborators and helps the club grow, while showing off the community and identity that make FADS, FADS.
     </p>
 
     <div class="ps-grid">
@@ -589,23 +589,46 @@
   <!-- GOALS -->
   <section>
     <p class="section-label">Goals</p>
-    <p class="body-text">As a club site, its main job is information and outreach, guided by three goals:</p>
+    <p class="body-text">As a club site, its main job is information and outreach, guided by four goals:</p>
     <div class="goal-grid">
       <div class="ps-card">
         <p class="goal-num">01</p>
         <p class="goal-title">Put everything in one place</p>
-        <p class="ps-text">Events, board members, and club info should be easy to find, without anyone needing to message us to ask.</p>
+        <p class="ps-text">All club info and events should be easy to find, without needing to search across multiple sources.</p>
       </div>
       <div class="ps-card">
         <p class="goal-num">02</p>
         <p class="goal-title">Make getting involved easy</p>
-        <p class="ps-text">Clear paths for students to join, attend events, or reach out, no matter which page they land on.</p>
+        <p class="ps-text">Clear paths for students to join, attend events, or reach out.</p>
       </div>
       <div class="ps-card">
         <p class="goal-num">03</p>
         <p class="goal-title">Show who we are</p>
-        <p class="ps-text">Showcase our editorials, magazine, and fashion show, and let the club's playful, fashion-forward personality come through.</p>
+        <p class="ps-text">Showcase our club's creative spirit, and let its playful, fashion-forward personality come through.</p>
       </div>
+      <div class="ps-card">
+        <p class="goal-num">04</p>
+        <p class="goal-title">Grow our reach</p>
+        <p class="ps-text">Give brands, organizations, and creatives a clear picture of FADS, opening the door to collaborations and helping the club expand.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- KEY DESIGN DECISIONS -->
+  <section>
+    <p class="section-label">Key Design Decisions</p>
+    <p class="body-text">The vision: make the site feel like FADS from the first second. Fun and creative like a fashion game, while staying easy to navigate and professional enough to trust.</p>
+    <div class="build-grid">
+      <figure class="build-item">
+        <div class="ph build-shot">Design guide snapshot<small>Colors + type</small></div>
+        <figcaption><strong>An editorial look, held together by a design guide</strong>Issue bars, big serif titles, and numbered sections borrow from fashion magazines. A shared guide of colors, type, and buttons keeps every page feeling like one polished site.</figcaption>
+      </figure>
+      <figure class="build-item">
+        <div class="ph build-shot">Player card screenshot<small>Meet the Board</small></div>
+        <figcaption><strong>Gamified interactivity</strong>Inspired by fashion games, moments like "choose your board member" make getting involved easy and fun, and show off the club's creativity and playfulness.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -618,7 +641,7 @@
 
     <div class="walk">
       <div class="walk-head"><span class="walk-num">01</span><h3 class="walk-title">Homepage</h3></div>
-      <p class="body-text">[A sentence or two on the homepage: the first impression, what visitors see first, and where it points them.]</p>
+      <p class="body-text">A first look at what FADS is, what we do, and how to get involved, with our creativity on display from the first scroll.</p>
       <div class="site-embed" data-src="https://fadsatucdavis.framer.website/">
         <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/</span><a class="embed-open" href="https://fadsatucdavis.framer.website/" target="_blank" rel="noopener">Open ↗</a></div>
         <div class="embed-view"><iframe title="FADS website: Homepage" loading="lazy" src="https://fadsatucdavis.framer.website/"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
@@ -626,7 +649,7 @@
     </div>
     <div class="walk">
       <div class="walk-head"><span class="walk-num">02</span><h3 class="walk-title">Fashion Show</h3></div>
-      <p class="body-text">[Highlights from the fashion show and what goes into putting it together.]</p>
+      <p class="body-text">An overview of our annual fashion show, with an exhibit of looks from the runway.</p>
       <div class="site-embed" data-src="https://fadsatucdavis.framer.website/fashionshow">
         <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/fashionshow</span><a class="embed-open" href="https://fadsatucdavis.framer.website/fashionshow" target="_blank" rel="noopener">Open ↗</a></div>
         <div class="embed-view"><iframe title="FADS website: Fashion show page" loading="lazy" src="https://fadsatucdavis.framer.website/fashionshow"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
@@ -634,7 +657,7 @@
     </div>
     <div class="walk">
       <div class="walk-head"><span class="walk-num">03</span><h3 class="walk-title">Get Involved</h3></div>
-      <p class="body-text">[How students can join, come to events, or contact us.]</p>
+      <p class="body-text">Every upcoming event in one place, so students can easily jump in. It also shows what we do week to week, beyond the magazine, show, and cohort.</p>
       <div class="site-embed" data-src="https://fadsatucdavis.framer.website/events">
         <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/events</span><a class="embed-open" href="https://fadsatucdavis.framer.website/events" target="_blank" rel="noopener">Open ↗</a></div>
         <div class="embed-view"><iframe title="FADS website: Join + contact" loading="lazy" src="https://fadsatucdavis.framer.website/events"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
@@ -642,10 +665,18 @@
     </div>
     <div class="walk">
       <div class="walk-head"><span class="walk-num">04</span><h3 class="walk-title">Magazine</h3></div>
-      <p class="body-text">[Where our magazine issues live, with a flip-through preview so visitors can browse each issue.]</p>
+      <p class="body-text">What goes into the FADS magazine and how to contribute, with past issues coming soon.</p>
       <div class="site-embed" data-src="https://fadsatucdavis.framer.website/magazine">
         <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/magazine</span><a class="embed-open" href="https://fadsatucdavis.framer.website/magazine" target="_blank" rel="noopener">Open ↗</a></div>
         <div class="embed-view"><iframe title="FADS website: Editorials + magazine flip" loading="lazy" src="https://fadsatucdavis.framer.website/magazine"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
+      </div>
+    </div>
+    <div class="walk">
+      <div class="walk-head"><span class="walk-num">05</span><h3 class="walk-title">About</h3></div>
+      <p class="body-text">Who we are, what FADS does, and why it matters, with an easy way to get in touch for students and collaborators alike.</p>
+      <div class="site-embed" data-src="https://fadsatucdavis.framer.website/about">
+        <div class="embed-bar"><span class="dots"><i></i><i></i><i></i></span><span class="embed-url">fadsatucdavis.framer.website/about</span><a class="embed-open" href="https://fadsatucdavis.framer.website/about" target="_blank" rel="noopener">Open ↗</a></div>
+        <div class="embed-view"><iframe title="FADS website: About" loading="lazy" src="https://fadsatucdavis.framer.website/about"></iframe><button class="embed-cover" type="button"><span>Click to explore</span></button></div>
       </div>
     </div>
   </section>
@@ -668,10 +699,10 @@
     </div>
   </section>
 
-  <div class="divider"></div>
+  <div class="divider" hidden></div>
 
-  <!-- REFLECTION -->
-  <section>
+  <!-- REFLECTION (hidden until written) -->
+  <section hidden>
     <p class="section-label">Reflection</p>
     <p class="body-text">
       [What you learned from designing a real site for your own club, what you're proud of, and what you'd add or change next.]
@@ -680,7 +711,7 @@
 
   <!-- CTAs -->
   <div class="cta-wrap">
-    <a href="kbeautymakeup.html" class="btn-cta">Next Project</a>
+    <a href="pridentity.html" class="btn-cta">Next Project</a>
     <a href="uiux.html" class="btn-outline">← Back to All UI/UX</a>
   </div>
 
