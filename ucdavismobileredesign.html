@@ -403,7 +403,7 @@
     <div class="hero-left">
       <p class="hero-eyebrow">Case Study</p>
       <h1 class="hero-title">UC Davis Mobile Redesign</h1>
-      <p class="hero-subtitle">App Redesign</p>
+      <p class="hero-subtitle">Making everyday campus tasks quicker to reach</p>
     </div>
     <div class="hero-right">
       <div class="hero-mockup">
@@ -501,7 +501,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/davishifivid1.mov" autoplay loop muted playsinline></video>
+            <video data-src="ucdavisapp/davishifivid1.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -523,7 +523,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/davishifivid2.mov" autoplay loop muted playsinline></video>
+            <video data-src="ucdavisapp/davishifivid2.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -545,7 +545,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/davishifivid3.mov" autoplay loop muted playsinline></video>
+            <video data-src="ucdavisapp/davishifivid3.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -567,7 +567,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/davishifivid4.mov" autoplay loop muted playsinline></video>
+            <video data-src="ucdavisapp/davishifivid4.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -589,7 +589,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/davishifivid5.mov" autoplay loop muted playsinline></video>
+            <video data-src="ucdavisapp/davishifivid5.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -616,7 +616,7 @@
 
   <!-- CTAs -->
   <div class="cta-wrap">
-    <a href="matuto.html" class="btn-cta">Next Project</a>
+    <a href="fads.html" class="btn-cta">Next Project</a>
     <a href="uiux.html" class="btn-outline">← Back to All UI/UX</a>
   </div>
 
@@ -733,5 +733,11 @@ draw();
     });
   </script>
 <script src="gleam.js"></script>
+
+<script>
+/* lazy-load videos: only download when scrolled near */
+(function(){var v=document.querySelectorAll('video[data-src]');if(!('IntersectionObserver' in window)){v.forEach(function(e){e.src=e.dataset.src});return}
+var o=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var e=en.target;e.src=e.dataset.src;e.removeAttribute('data-src');e.load();var p=e.play&&e.play();if(p&&p.catch)p.catch(function(){});o.unobserve(e)}})},{rootMargin:'300px 0px'});v.forEach(function(e){o.observe(e)})})();
+</script>
 </body>
 </html>

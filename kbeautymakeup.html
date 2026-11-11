@@ -371,13 +371,18 @@
     }
     .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
     .change-list { margin: 18px 0 0 20px; color: var(--text-mid); font-size: 0.92rem; line-height: 1.9; }
+    .nav-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+    .nav-box { display: flex; align-items: center; justify-content: center; gap: 10px; aspect-ratio: 4 / 3; padding: 20px; border-radius: 14px; background: rgba(255,255,255,0.55); box-shadow: 0 8px 28px rgba(210,140,170,0.2); }
+    .nav-box img { height: 100%; width: auto; max-width: 44%; object-fit: contain; border-radius: 10px; display: block; }
+    .nav-arrow { font-size: 1.2rem; opacity: 0.5; }
+    @media (max-width: 800px) { .nav-compare { grid-template-columns: 1fr; } }
     .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 8px; }
     .ph-phone { aspect-ratio: 9 / 19; width: 100%; }
     @media (max-width: 800px) { .three-col { grid-template-columns: 1fr; } }
 
 
     .ba img.ba-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; display: block; background: #fff; }
-    .ba + .caption { margin-bottom: 32px; }
+    .ba + .caption { margin-bottom: 72px; }
     .ba-tag {
       position: absolute; top: 12px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
       color: #fff; background: rgba(40,20,30,0.55); padding: 3px 10px; border-radius: 100px; pointer-events: none;
@@ -409,7 +414,7 @@
     @media (max-width: 800px) { .ba-with-side { grid-template-columns: 1fr; } .side-shot { max-width: 220px; margin: 0 auto; } }
 
     /* spacing + key changes intro */
-    .kc-intro { text-align: center; margin: 8px auto 88px; }
+    .kc-intro { text-align: left; margin: 8px 0 56px; }
     .kc-title { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: clamp(1.9rem, 3.4vw, 2.6rem); color: var(--text-dark); line-height: 1.2; }
     .kc-sub { margin-top: 12px; display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 999px;
       background: linear-gradient(135deg, rgba(255,255,255,0.65), rgba(252,235,245,0.30));
@@ -572,6 +577,21 @@
     @keyframes livePan { 0%, 8% { transform: translateY(0); } 92%, 100% { transform: translateY(calc(-100% + 100cqh)); } }
     @media (prefers-reduced-motion: reduce) { .live-view img { animation: none; } }
     
+    /* ── KEY CHANGES hierarchy ── */
+    .kc-section .walk { margin-top: 72px !important; padding-top: 72px; border-top: 1px solid rgba(210,140,170,0.22); }
+    .kc-section .kc-intro + .walk { margin-top: 0 !important; padding-top: 0; border-top: 0; }
+    .kc-section .walk-head { align-items: center; gap: 14px; margin-bottom: 12px; }
+    .kc-section .walk-num { font-size: 0.78rem; padding: 5px 11px; border-radius: 999px; background: rgba(234,151,169,0.16); }
+    .kc-section .walk-title { font-family: 'Outfit', sans-serif; font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 1.85rem); }
+    .kc-section .walk > .body-text { margin-bottom: 32px; }
+    .kc-section .ba { max-width: 780px; margin-left: auto; margin-right: auto; }
+    .kc-section .ba-with-side { max-width: 900px; margin-left: auto; margin-right: auto; margin-bottom: 88px; }
+    .kc-section .ba-with-side .caption { margin-bottom: 0 !important; }
+    .kc-section .kc-insight { margin-top: 10px; margin-bottom: 14px; }
+    .kc-section .ba-with-side + .ba { margin-top: 0 !important; }
+    .kc-section .ba + .ba, .kc-section .caption + .ba, .kc-section .caption + .ba-with-side { margin-top: 0 !important; }
+    .kc-section .caption { text-align: center; font-size: 0.85rem; letter-spacing: 0.02em; margin-top: 14px; margin-bottom: 88px !important; }
+    .kc-section .walk > :last-child, .kc-section .walk > :last-child .caption { margin-bottom: 0 !important; }
   </style>
   <link rel="stylesheet" href="gleam.css" />
 </head>
@@ -608,7 +628,7 @@
     <div class="hero-left">
       <p class="hero-eyebrow">Case Study</p>
       <h1 class="hero-title">K-Beauty Makeup</h1>
-      <p class="hero-subtitle">An e-commerce website renovation</p>
+      <p class="hero-subtitle">Redesigning a beauty store so shoppers find what they want</p>
     </div>
     <div class="hero-right">
       <a class="live-hero" href="https://www.kbeautymakeup.com/" target="_blank" rel="noopener" aria-label="Open the live K-Beauty Makeup website">
@@ -649,23 +669,26 @@
   <section class="kc-section">
     <div class="kc-intro">
       <h2 class="kc-title">Key Changes</h2>
+      <p class="body-text kc-insight">Shoppers were getting lost before they ever reached a product, so every change shortens the path from landing to checkout.</p>
       <p class="kc-sub">Drag each slider to compare before and after</p>
     </div>
 
     <!-- 01 HEADER + NAVIGATION -->
     <div class="walk">
       <div class="walk-head"><span class="walk-num">01</span><h3 class="walk-title">Header + Navigation</h3></div>
-      <p class="body-text">Fixed spacing, sizing, and positioning for clearer hierarchy, and merged two nav bars (the top bar and a breadcrumb bar) into one. Why K-Beauty, About Us, and FAQ now live under a single About dropdown.</p>
+      <p class="body-text">Two nav bars and uneven spacing split shoppers' attention. I merged them into one clear bar and tucked Why K-Beauty, About Us, and FAQ under a single About dropdown, so product categories come first.</p>
       <div class="ba-with-side">
+        <div>
         <div class="ba" style="--pos:50%">
         <img class="ba-img" src="kbeauty/homepage-after.jpg" alt="Homepage, after" loading="lazy" />
         <div class="ba-before"><img class="ba-img" src="kbeauty/homepage-before.jpg" alt="Homepage, before" loading="lazy" /></div>
         <span class="ba-line"></span><span class="ba-tag ba-tag-b">Before</span><span class="ba-tag ba-tag-a">After</span>
         <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: Homepage" />
       </div>
+        <p class="caption">Header + nav bar</p>
+        </div>
         <figure class="side-shot"><img src="kbeauty/about-dropdown.jpg" alt="New About dropdown" loading="lazy" /><figcaption>New About dropdown</figcaption></figure>
       </div>
-      <p class="caption">Header + nav bar</p>
       <div class="ba" style="--pos:50%">
         <img class="ba-img" src="kbeauty/search-after.jpg" alt="Search bar, after" loading="lazy" />
         <div class="ba-before"><img class="ba-img" src="kbeauty/search-before.jpg" alt="Search bar, before" loading="lazy" /></div>
@@ -678,18 +701,29 @@
     <!-- 02 MOBILE -->
     <div class="walk">
       <div class="walk-head"><span class="walk-num">02</span><h3 class="walk-title">Mobile Navigation</h3></div>
-      <p class="body-text">Tapping a category on mobile jumped straight to a page of subsections, with no way to see the whole category. I rebuilt the menu with dropdowns so shoppers can do both.</p>
-      <div class="three-col">
-        <div><img class="phone-shot" src="kbeauty/mobile-nav-before.jpg" alt="Mobile nav, before" loading="lazy" /><p class="caption">Before: menu</p></div>
-        <div><img class="phone-shot" src="kbeauty/mobile-nav-sections-before.jpg" alt="Old mobile category page" loading="lazy" /><p class="caption">Before: where a category tap took you</p></div>
-        <div><img class="phone-shot" src="kbeauty/mobile-nav-after.jpg" alt="Mobile nav, after" loading="lazy" /><p class="caption">After</p></div>
+      <p class="body-text">Tapping a category on mobile jumped straight to a page of subsections, with no way to see the whole category. I rebuilt the menu with dropdowns so shoppers can do both without losing their place.</p>
+      <div class="nav-compare">
+        <div>
+          <div class="nav-box">
+            <img src="kbeauty/mobile-nav-before.jpg" alt="Mobile nav, before" loading="lazy" />
+            <span class="nav-arrow" aria-hidden="true">&rarr;</span>
+            <img src="kbeauty/mobile-nav-sections-before.jpg" alt="Old mobile category page a category tap led to" loading="lazy" />
+          </div>
+          <p class="caption">Before: menu, then where a category tap took you</p>
+        </div>
+        <div>
+          <div class="nav-box">
+            <img src="kbeauty/mobile-nav-after.jpg" alt="Mobile nav, after" loading="lazy" />
+          </div>
+          <p class="caption">After</p>
+        </div>
       </div>
     </div>
 
     <!-- 03 HOMEPAGE SECTIONS -->
     <div class="walk">
       <div class="walk-head"><span class="walk-num">03</span><h3 class="walk-title">Homepage Sections</h3></div>
-      <p class="body-text">Clearer hierarchy and easier navigation: prices and add-to-cart buttons are now visible, and Shop All leads to the new Deals page.</p>
+      <p class="body-text">Shoppers had to click into products just to see prices, so prices and add-to-cart buttons are now visible right away, and Shop All leads to the new Deals page. The homepage also felt empty, so I added two sections to help shoppers discover more.</p>
       <div class="ba" style="--pos:50%">
         <img class="ba-img" src="kbeauty/sales-after.jpg" alt="Sales section, after" loading="lazy" />
         <div class="ba-before"><img class="ba-img" src="kbeauty/sales-before.jpg" alt="Sales section, before" loading="lazy" /></div>
@@ -697,7 +731,6 @@
         <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after: Sales section" />
       </div>
       <p class="caption">Sales section</p>
-      <p class="body-text sub-text">The homepage felt empty before, so I added two new sections:</p>
       <div class="two-col">
         <div><img class="clip-shot" src="kbeauty/trending-after.jpg" alt="New Trending Now section" loading="lazy" /><p class="clip-title">New: Trending Now</p><p class="clip-text">More featured products, so shoppers discover more.</p></div>
         <div><img class="clip-shot" src="kbeauty/brand-discoveries.jpg" alt="New Brand Discoveries section" loading="lazy" /><p class="clip-title">New: Brand Discoveries</p><p class="clip-text">Quick access to the store's most popular brands.</p></div>
@@ -707,7 +740,7 @@
     <!-- 04 BRAND + CONTENT PAGES -->
     <div class="walk">
       <div class="walk-head"><span class="walk-num">04</span><h3 class="walk-title">Brands</h3></div>
-      <p class="body-text">The old Brands page was nearly empty, browsing meant scrolling a giant dropdown of every brand, and Popular/Vegan Brands led to product pages instead of brands. Now there's a dedicated Brands page with a searchable A–Z catalogue.</p>
+      <p class="body-text">The old Brands page was nearly empty, browsing meant scrolling a giant dropdown of every brand, and Popular/Vegan Brands led to product pages instead of brands. Since many shoppers come looking for a specific brand, there's now a dedicated Brands page with a searchable A–Z catalogue.</p>
       <div class="ba" style="--pos:50%">
         <img class="ba-img" src="kbeauty/brands-page-after.jpg" alt="Brands page, after" loading="lazy" />
         <div class="ba-before"><img class="ba-img" src="kbeauty/brand-page-before.jpg" alt="Brands page, before" loading="lazy" /></div>

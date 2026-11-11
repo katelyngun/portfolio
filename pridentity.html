@@ -403,7 +403,7 @@
     <div class="hero-left">
       <p class="hero-eyebrow">Case Study</p>
       <h1 class="hero-title">Pridentity</h1>
-      <p class="hero-subtitle">A Platform for Queer Media</p>
+      <p class="hero-subtitle">Queer media reviews you can trust, from people like you</p>
     </div>
     <div class="hero-right">
       <div class="hero-mockup">
@@ -483,7 +483,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/hifivid1.mov" autoplay loop muted playsinline></video>
+            <video data-src="pridentity/hifivid1.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -505,7 +505,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/hifivid2.mov" autoplay loop muted playsinline></video>
+            <video data-src="pridentity/hifivid2.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -527,7 +527,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/hifivid3.mov" autoplay loop muted playsinline></video>
+            <video data-src="pridentity/hifivid3.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -549,7 +549,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/hifivid4.mov" autoplay loop muted playsinline></video>
+            <video data-src="pridentity/hifivid4.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -571,7 +571,7 @@
         </div>
         <div class="phone-item">
           <div class="phone-card">
-            <video src="https://f004.backblazeb2.com/file/Kattelyn-Portfolio-Files/hifivid5.mov" autoplay loop muted playsinline></video>
+            <video data-src="pridentity/hifivid5.mp4" preload="none" autoplay loop muted playsinline></video>
           </div>
         </div>
         <div class="phone-item">
@@ -733,5 +733,11 @@ draw();
     });
   </script>
 <script src="gleam.js"></script>
+
+<script>
+/* lazy-load videos: only download when scrolled near */
+(function(){var v=document.querySelectorAll('video[data-src]');if(!('IntersectionObserver' in window)){v.forEach(function(e){e.src=e.dataset.src});return}
+var o=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){var e=en.target;e.src=e.dataset.src;e.removeAttribute('data-src');e.load();var p=e.play&&e.play();if(p&&p.catch)p.catch(function(){});o.unobserve(e)}})},{rootMargin:'300px 0px'});v.forEach(function(e){o.observe(e)})})();
+</script>
 </body>
 </html>
