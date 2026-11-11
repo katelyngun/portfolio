@@ -1,3 +1,6 @@
 *.mov filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.gif filter=lfs diff=lfs merge=lfs -text
+pridentity/*.mp4 !filter !diff !merge
+ucdavisapp/*.mp4 !filter !diff !merge
+fads/board-interaction.mp4 !filter !diff !merge
